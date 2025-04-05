@@ -39,6 +39,7 @@ dependencies:
   equatable: any
   url_launcher: any
   gif: any
+  animations: any
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zbk_portfolio/features/home/presentation/tab_bloc/tab_bloc.dart';
@@ -36,29 +37,55 @@ class _HomeScreenState extends State<HomeScreen> {
                       setState(() {
                         selectedIndex = index;
                       });
-                      // Removed duplicate event dispatching
                     },
                   ),
-                  const SizedBox(height: 20),
-                  BlocBuilder<TabBloc, TabState>(
-                    builder: (context, state) {
-                      switch (state.runtimeType) {
-                        case const (TabMobileApp):
-                          return const AndroidFlutterContent();
-                        case const (TabWebApp):
-                          return const WebAppContent();
-                        case const (TabDataScience):
-                          return const DataScienceAiContent();
-                        case const (TabCertificates):
-                          return const CertificatesContent();
-                        case const (TabPublications):
-                          return const PublicationsContent();
-                        case const (TabAboutMe):
-                          return const AboutMeContent();
-                        default:
-                          return const AndroidFlutterContent();
-                      }
-                    },
+
+                  Expanded(
+                    child: BlocBuilder<TabBloc, TabState>(
+                      builder: (context, state) {
+                        Widget content;
+                        switch (state.runtimeType) {
+                          case TabMobileApp:
+                            content = const AndroidFlutterContent();
+                            break;
+                          case TabWebApp:
+                            content = const WebAppContent();
+                            break;
+                          case const (TabDataScience):
+                            content = const DataScienceAiContent();
+                            break;
+                          case TabCertificates:
+                            content = const CertificatesContent();
+                            break;
+                          case TabPublications:
+                            content = const PublicationsContent();
+                            break;
+                          case TabAboutMe:
+                            content = const AboutMeContent();
+                            break;
+                          default:
+                            content = const AndroidFlutterContent();
+                        }
+                        return RepaintBoundary(
+                          child: PageTransitionSwitcher(
+                            duration: const Duration(milliseconds: 500),
+                            transitionBuilder: (
+                                Widget child,
+                                Animation<double> primaryAnimation,
+                                Animation<double> secondaryAnimation,
+                                ) {
+                              return SharedAxisTransition(
+                                animation: primaryAnimation,
+                                secondaryAnimation: secondaryAnimation,
+                                transitionType: SharedAxisTransitionType.horizontal,
+                                child: child,
+                              );
+                            },
+                            child: content,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
