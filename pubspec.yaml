@@ -40,6 +40,7 @@ dependencies:
   url_launcher: any
   gif: any
   animations: any
+  infinite_scroll_pagination: any
 
 dev_dependencies:
   flutter_test:

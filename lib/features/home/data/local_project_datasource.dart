@@ -6,10 +6,10 @@ class LocalProjectDataSource {
 
   Future<void> deleteProject(String id) async {}
 
-  Future<List<Project>> getProjectsByCategory(String category) async {
+  Future<List<Project>> getProjectsByCategory(ProjectCategory category) async {
     return ProjectLoader().loadProjects().then((projects) {
       return projects
-          .where((project) => project.category.name == category)
+          .where((project) => project.category == category)
           .toList();
     });
   }

@@ -3,7 +3,7 @@
 
 import 'package:zbk_portfolio/features/home/domain/project.dart';
 
-import '../domain/ProjectRepo.dart';
+import '../domain/project_repo.dart';
 import 'local_project_datasource.dart';
 
 class LocalProjectRepo implements ProjectRepo {
@@ -22,7 +22,7 @@ class LocalProjectRepo implements ProjectRepo {
   }
 
   @override
-  Future<List<Project>> getProjectsByCategory(String category) {
+  Future<List<Project>> getProjectsByCategory(ProjectCategory category) {
     return localProjectDataSource.getProjectsByCategory(category);
   }
 

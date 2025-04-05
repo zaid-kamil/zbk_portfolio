@@ -1,4 +1,4 @@
-import 'package:zbk_portfolio/features/home/data/local_project_datasource.dart';
+
 
 
 enum ProjectCategory {
@@ -7,6 +7,7 @@ enum ProjectCategory {
   dataScience,
   certificates,
   publications,
+  aboutMe,
 }
 
 class Project {

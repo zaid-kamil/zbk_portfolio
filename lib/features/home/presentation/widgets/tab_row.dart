@@ -39,7 +39,6 @@ class _TabRowState extends State<TabRow> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final primaryColor = theme.primaryColor;
-    final secondaryColor = theme.colorScheme.secondary;
     final backgroundColor = theme.colorScheme.surface;
 
     return RepaintBoundary(
@@ -54,12 +53,12 @@ class _TabRowState extends State<TabRow> {
               offset: const Offset(0, 2),
             ),
           ],
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           children: List.generate(_tabNames.length, (index) {
             final isSelected = _selectedIndex == index;
             final tabColor = isSelected ? primaryColor : Colors.grey.withAlpha(150);
-
             return Expanded(
               child: RepaintBoundary(
                 child: InkWell(
