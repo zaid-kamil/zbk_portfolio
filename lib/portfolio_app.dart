@@ -1,7 +1,8 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import 'features/home/presentation/pages/home_screen.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:zbk_portfolio/features/home/presentation/pages/home_screen.dart';
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -14,9 +15,19 @@ class PortfolioApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: AnimatedSplashScreen(
+        splash: Image.asset("assets/gifs/loading.gif"),
+        nextScreen: const HomeScreen(),
+        // Replace with your main page widget
+        duration: 1500,
+        splashTransition: SplashTransition.fadeTransition,
+        pageTransitionType: PageTransitionType.fade,
+        // Changed from scale
+        backgroundColor: Colors.white,
+        splashIconSize: 150,
+        centered: true,
+      ),
       debugShowCheckedModeBanner: false,
-      // add mouse cursor for web
       scrollBehavior: const ScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.mouse,

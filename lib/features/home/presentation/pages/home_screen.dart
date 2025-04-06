@@ -26,13 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ? null
               : Drawer(
                   width: 360,
+                  backgroundColor: backgroundColor,
                   child: const Sidebar(),
-                  backgroundColor: backgroundColor),
+                ),
           appBar: isDesktop
               ? null
-              : AppBar(
-                  title: const Text('Portfolio'),
-                ),
+              : AppBar(title: const Text("Zaid Kamil's Portfolio")),
           body: Row(
             children: [
               if (isDesktop) const Sidebar(),

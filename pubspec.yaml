@@ -32,6 +32,7 @@ dependencies:
   auto_animated: any
   wolt_modal_sheet: any
   animated_splash_screen: any
+  page_transition: any
 
 dev_dependencies:
   flutter_test:
