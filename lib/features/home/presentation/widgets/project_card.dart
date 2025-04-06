@@ -8,6 +8,7 @@ class ProjectCard extends StatelessWidget {
   final List<String> technologies;
   final String? githubUrl;
   final String? demoUrl;
+  final void Function()? onTap;
 
   const ProjectCard({
     super.key,
@@ -17,6 +18,7 @@ class ProjectCard extends StatelessWidget {
     required this.technologies,
     this.githubUrl,
     this.demoUrl,
+    required this.onTap,
   });
 
   @override
@@ -28,7 +30,7 @@ class ProjectCard extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: InkWell(
-            onTap: () {},
+            onTap: onTap,
             borderRadius: BorderRadius.circular(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +95,8 @@ class ProjectCard extends StatelessWidget {
                         Wrap(
                           children: technologies
                               .map((tech) => Padding(
-                                    padding: const EdgeInsets.only(right: 4,top: 4),
+                                    padding:
+                                        const EdgeInsets.only(right: 4, top: 4),
                                     child: Chip(
                                       label: Text(
                                         tech,

@@ -97,7 +97,7 @@ class ProjectLoader {
             'Designed an internet speed testing app with UI animations.',
         technologies: ['Jetpack Compose', 'Kotlin', 'Animations'],
         githubUrl: "https://github.com/zaid-kamil/SpeedTest-compose",
-        imageUrl: 'assets/images/speedtest_app.png',
+        imageUrl: 'assets/images/speedtest_app.jpg',
       ),
 
       const Project(

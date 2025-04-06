@@ -1,9 +1,12 @@
 import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zbk_portfolio/features/home/data/local_project_datasource.dart';
 import 'package:zbk_portfolio/features/home/domain/project.dart';
+import 'package:zbk_portfolio/features/home/presentation/project_bloc/project_details_bloc.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/category_filter_chips.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/project_card.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/project_details_modal.dart';
 import 'package:zbk_portfolio/features/home/utils/display_utils.dart';
 
 class ContentDisplayArea extends StatefulWidget {
@@ -77,15 +80,34 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
       _currentPage,
     )[i];
 
-    return FadeTransition(
-      opacity: animation,
-      child: ProjectCard(
-        title: project.title,
-        description: project.description,
-        imageUrl: project.imageUrl ?? '',
-        technologies: project.technologies,
-        demoUrl: project.url,
-        githubUrl: project.githubUrl,
+    return ScaleTransition(
+      scale: animation,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: ProjectCard(
+          title: project.title,
+          description: project.description,
+          imageUrl: project.imageUrl ?? '',
+          technologies: project.technologies,
+          demoUrl: project.url,
+          githubUrl: project.githubUrl,
+          onTap: () {
+            context
+                .read<ProjectDetailsBloc>()
+                .add(ShowProjectDetails(project));
+
+            // Use Builder to get fresh context
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (builderContext) => BlocProvider.value(
+                value: context.read<ProjectDetailsBloc>(),
+                child: ProjectDetailsModal(project: project),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
