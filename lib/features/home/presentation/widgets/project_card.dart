@@ -34,7 +34,7 @@ class ProjectCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 200,
+                  height: 220,
                   width: double.infinity,
                   child: ClipRRect(
                     borderRadius:

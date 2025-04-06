@@ -1,7 +1,10 @@
+import 'package:auto_animated/auto_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:zbk_portfolio/features/home/data/local_project_datasource.dart';
 import 'package:zbk_portfolio/features/home/domain/project.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/category_filter_chips.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/project_card.dart';
+import 'package:zbk_portfolio/features/home/utils/display_utils.dart';
 
 class ContentDisplayArea extends StatefulWidget {
   final ProjectCategory category;
@@ -17,48 +20,7 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
   late Future<List<Project>> _projectsFuture;
   String _selectedCategory = 'All';
   int _currentPage = 0;
-  final int _projectsPerPage = 8;
-  final _gridKey = GlobalKey<SliverAnimatedGridState>();
-
-  Future<List<Project>> _loadProjects() async {
-    return await _localDataSource.getProjectsByCategory(widget.category);
-  }
-
-  List<String> _getCategories(List<Project> projects) {
-    final Set<String> categories = {'All'};
-    for (final project in projects) {
-      categories.addAll(project.technologies);
-    }
-    return categories.toList()..sort();
-  }
-
-  List<Project> _getFilteredProjects(List<Project> projects) {
-    if (_selectedCategory == 'All') {
-      return projects;
-    }
-    return projects
-        .where((project) => project.technologies.contains(_selectedCategory))
-        .toList();
-  }
-
-  List<Project> _getPaginatedProjects(List<Project> projects) {
-    final startIndex = _currentPage * _projectsPerPage;
-    final endIndex = startIndex + _projectsPerPage;
-
-    if (startIndex >= projects.length) {
-      return [];
-    }
-
-    if (endIndex > projects.length) {
-      return projects.sublist(startIndex);
-    }
-
-    return projects.sublist(startIndex, endIndex);
-  }
-
-  int _getPageCount(List<Project> projects) {
-    return (projects.length / _projectsPerPage).ceil();
-  }
+  int _totalItems = 0;
 
   @override
   void initState() {
@@ -70,130 +32,156 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
   void didUpdateWidget(ContentDisplayArea oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.category != widget.category) {
-      _selectedCategory = 'All'; // Reset category filter
-      _currentPage = 0; // Reset pagination
-      _projectsFuture = _loadProjects(); // Reload projects for new category
+      setState(() {
+        _selectedCategory = 'All';
+        _currentPage = 0;
+        _projectsFuture = _loadProjects();
+      });
     }
   }
 
-  String getNameFromCategory(ProjectCategory category) {
-    switch (category) {
-      case ProjectCategory.webApp:
-        return 'Web Apps';
-      case ProjectCategory.mobileApp:
-        return 'Mobile Apps';
-      case ProjectCategory.dataScience:
-        return 'Data Science';
-      case ProjectCategory.certificates:
-        return 'Certificates';
-      case ProjectCategory.publications:
-        return 'Publications';
-      case ProjectCategory.aboutMe:
-        return 'About Me';
-    }
+  Future<List<Project>> _loadProjects() =>
+      _localDataSource.getProjectsByCategory(widget.category);
+
+  Widget _buildHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Text(
+        DisplayUtils.getCategoryTitle(widget.category),
+        style: Theme.of(context).textTheme.displaySmall,
+      ),
+    );
+  }
+
+  Widget _buildProjectGrid(
+      List<Project> displayProjects, BuildContext context) {
+    return LiveSliverGrid(
+      controller: ScrollController(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: DisplayUtils.getGridCount(context),
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        mainAxisExtent: 450,
+      ),
+      itemCount: displayProjects.length,
+      itemBuilder: (context, i, animation) =>
+          _buildProjectCard(context, i, animation, displayProjects),
+    );
+  }
+
+  Widget _buildProjectCard(BuildContext context, int i,
+      Animation<double> animation, List<Project> projects) {
+    final project = DisplayUtils.getFilteredAndPaginatedProjects(
+      projects,
+      _selectedCategory,
+      _currentPage,
+    )[i];
+
+    return FadeTransition(
+      opacity: animation,
+      child: ProjectCard(
+        title: project.title,
+        description: project.description,
+        imageUrl: project.imageUrl ?? '',
+        technologies: project.technologies,
+        demoUrl: project.url,
+        githubUrl: project.githubUrl,
+      ),
+    );
+  }
+
+  Widget _buildPaginationDots(int pageCount, Color primaryColor) {
+    if (pageCount <= 1) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(pageCount, (index) {
+          return IconButton(
+            icon: Icon(
+              Icons.circle,
+              color: _currentPage == index
+                  ? primaryColor
+                  : primaryColor.withAlpha(150),
+            ),
+            onPressed: () => setState(() => _currentPage = index),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildContent(List<Project> projects, ThemeData theme) {
+    final primaryColor = theme.primaryColorDark;
+    final backgroundColor = theme.colorScheme.onPrimary;
+    final pageCount = DisplayUtils.getPageCount(projects, _selectedCategory);
+    final displayProjects = DisplayUtils.getFilteredAndPaginatedProjects(
+      projects,
+      _selectedCategory,
+      _currentPage,
+    );
+
+    _totalItems = DisplayUtils.getTotalItemCount(projects, _selectedCategory);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        border: Border(
+          bottom: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+          left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+          right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+        ),
+      ),
+      child: Column(
+        children: [
+          _buildHeader(context),
+          CategoryFilterChips(
+            categories: DisplayUtils.getCategories(projects),
+            selectedCategory: _selectedCategory,
+            onCategorySelected: (category) => setState(() {
+              _selectedCategory = category;
+              _currentPage = 0;
+            }),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: CustomScrollView(
+              controller: ScrollController(),
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.all(16),
+                  sliver: _buildProjectGrid(displayProjects, context),
+                ),
+              ],
+            ),
+          ),
+          _buildPaginationDots(pageCount, primaryColor),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Project>>(
-      future: _projectsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No projects found.'));
-        }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+      child: FutureBuilder<List<Project>>(
+        future: _projectsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No projects found.'));
+          }
 
-        final projects = snapshot.data!;
-        final categories = _getCategories(projects);
-        final filteredProjects = _getFilteredProjects(projects);
-        final paginatedProjects = _getPaginatedProjects(filteredProjects);
-        final pageCount = _getPageCount(filteredProjects);
-
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                getNameFromCategory(widget.category),
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-            ),
-            Wrap(
-              spacing: 8.0,
-              children: [
-                for (final category in categories)
-                  ChoiceChip(
-                    label: Text(category),
-                    selected: _selectedCategory == category,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedCategory = selected ? category : 'All';
-                        _currentPage = 0; // Reset pagination
-                      });
-                    },
-                  ),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: GridView.builder(
-                  key: _gridKey,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 16.0,
-                    mainAxisSpacing: 16.0,
-                    mainAxisExtent: 450,
-                  ),
-                  itemCount: paginatedProjects.length,
-                  itemBuilder: (context, index) {
-                    final project = paginatedProjects[index];
-                    return ProjectCard(
-                      title: project.title,
-                      description: project.description,
-                      imageUrl: project.imageUrl ?? '',
-                      technologies: project.technologies,
-                      demoUrl: project.url,
-                      githubUrl: project.githubUrl,
-                    );
-                  },
-                ),
-              ),
-            ),
-            if (pageCount > 1)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      setState(() {
-                        if (_currentPage > 0) {
-                          _currentPage--;
-                        }
-                      });
-                    },
-                  ),
-                  Text('${_currentPage + 1} / $pageCount'),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () {
-                      setState(() {
-                        if (_currentPage < pageCount - 1) {
-                          _currentPage++;
-                        }
-                      });
-                    },
-                  ),
-                ],
-              ),
-          ],
-        );
-      },
+          return _buildContent(snapshot.data!, Theme.of(context));
+        },
+      ),
     );
   }
 }
