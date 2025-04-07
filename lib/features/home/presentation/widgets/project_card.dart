@@ -35,20 +35,25 @@ class ProjectCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // In ProjectCard class, modify the image section
                 SizedBox(
                   height: 220,
                   width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius:
-                        const BorderRadius.vertical(top: Radius.circular(12)),
-                    child: Image.network(
-                      imageUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
-                        color: Colors.grey.shade200,
-                        child: Image.asset(
-                          'assets/images/default.png',
-                          fit: BoxFit.cover,
+                  child: Hero(
+                    tag: 'project-image-${title.hashCode}',
+                    // Unique tag for each project
+                    child: ClipRRect(
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(12)),
+                      child: Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          color: Colors.grey.shade200,
+                          child: Image.asset(
+                            'assets/images/default.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),

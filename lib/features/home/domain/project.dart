@@ -20,6 +20,7 @@ class Project {
   final String? url;
   final int difficultyLevel;
   final List<String>? screenshots;
+  final String? videoUrl;
 
   const Project({
     required this.category,
@@ -31,7 +32,6 @@ class Project {
     this.url,
     this.difficultyLevel = 1,
     this.screenshots = const [],
+    this.videoUrl,
   });
-
-
 }

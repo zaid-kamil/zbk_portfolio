@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zbk_portfolio/features/home/data/local_project_datasource.dart';
 import 'package:zbk_portfolio/features/home/domain/project.dart';
+import 'package:zbk_portfolio/features/home/presentation/pages/project_details_page.dart';
 import 'package:zbk_portfolio/features/home/presentation/project_bloc/project_details_bloc.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/category_filter_chips.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/project_card.dart';
-import 'package:zbk_portfolio/features/home/presentation/widgets/project_details_modal.dart';
 import 'package:zbk_portfolio/features/home/utils/display_utils.dart';
 
 class ContentDisplayArea extends StatefulWidget {
@@ -92,13 +92,11 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
           demoUrl: project.url,
           githubUrl: project.githubUrl,
           onTap: () {
-            context
-                .read<ProjectDetailsBloc>()
-                .add(ShowProjectDetails(project));
-            // goto
-            showDialog(
-              context: context,
-              builder: (context) => ProjectDetailsModal(project: project),
+            context.read<ProjectDetailsBloc>().add(ShowProjectDetails(project));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ProjectDetailsPage(project: project),
+              ),
             );
           },
         ),
