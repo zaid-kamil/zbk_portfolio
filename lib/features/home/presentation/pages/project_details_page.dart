@@ -1,6 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:zbk_portfolio/features/home/domain/project.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/project_info.dart';
+
+class FancyCard extends StatelessWidget {
+  const FancyCard({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.onCardPressed,
+  });
+
+  final VoidCallback onCardPressed;
+  final Image image;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 4.0,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: 250,
+              height: 250,
+              child: image,
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            OutlinedButton(
+              child: const Text("Learn more"),
+              onPressed: onCardPressed,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class ProjectDetailsPage extends StatelessWidget {
   final Project project;
@@ -17,71 +57,79 @@ class ProjectDetailsPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (project.imageUrl != null)
-              Hero(
-                tag: 'project-image-${project.title.hashCode}',
-                child: SizedBox(
-                  width: double.infinity,
-                  child: InteractiveViewer(
-                    boundaryMargin: const EdgeInsets.all(20.0),
-                    minScale: 0.5,
-                    maxScale: 4.0,
-                    child: Image.network(
-                      project.imageUrl!,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    project.description,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 16),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: project.technologies
-                        .map((tech) => Chip(
-                      label: Text(tech),
-                      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-                    ))
-                        .toList(),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      if (project.githubUrl != null)
-                        TextButton.icon(
-                          icon: const Icon(Icons.code),
-                          label: const Text('View Code'),
-                          onPressed: () => launchUrl(Uri.parse(project.githubUrl!)),
-                        ),
-                      const SizedBox(width: 8),
-                      if (project.url != null)
-                        ElevatedButton.icon(
-                          icon: const Icon(Icons.launch),
-                          label: const Text('Live Demo'),
-                          onPressed: () => launchUrl(Uri.parse(project.url!)),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: constraints.maxWidth > 1200
+              ? _buildWideLayout()
+              : constraints.maxWidth > 600
+                  ? _buildMediumLayout()
+                  : _buildNarrowLayout(),
+        );
+      }),
+    );
+  }
+
+  Widget _buildWideLayout() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 1,
+          child: SingleChildScrollView(
+            child: ProjectInfo(project: project),
+          ),
         ),
+        const SizedBox(width: 24),
+        Expanded(
+          flex: 2,
+          child: ProjectCarousal(project: project),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMediumLayout() {
+    return Column(
+      children: [
+        Expanded(
+          child: ProjectCarousal(project: project),
+        ),
+        const SizedBox(height: 24),
+        ProjectInfo(project: project),
+      ],
+    );
+  }
+
+  Widget _buildNarrowLayout() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 400, // Fixed height for carousel on mobile
+            child: ProjectCarousal(project: project),
+          ),
+          ProjectInfo(project: project),
+        ],
       ),
+    );
+  }
+}
+
+class ProjectCarousal extends StatelessWidget {
+  final Project project;
+
+  const ProjectCarousal({super.key, required this.project});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+          children: [
+
+          ]
+        ),
     );
   }
 }

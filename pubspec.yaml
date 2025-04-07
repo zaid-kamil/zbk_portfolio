@@ -33,6 +33,10 @@ dependencies:
   wolt_modal_sheet: any
   animated_splash_screen: any
   page_transition: any
+  shimmer: any
+  stacked_card_carousel: any
+  video_player: any
+  chewie: any
 
 dev_dependencies:
   flutter_test:

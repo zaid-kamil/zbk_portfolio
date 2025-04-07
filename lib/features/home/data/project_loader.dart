@@ -11,6 +11,7 @@ class ProjectLoader {
         technologies: ['Flutter', 'Dart'],
         githubUrl: "github.com/zaid-kamil/zbk_portfolio",
         url: "https://zaidkamil.socialmistry.com",
+        difficultyLevel: 5,
       ),
       // New data science projects
       const Project(
@@ -22,6 +23,7 @@ class ProjectLoader {
         url: "https://pypi.org/project/dputils",
         githubUrl: "https://github.com/digipodium/dputils",
         imageUrl: 'assets/images/dputils.png',
+        difficultyLevel: 8
       ),
 
       const Project(
@@ -33,6 +35,7 @@ class ProjectLoader {
         githubUrl: "https://github.com/zaid-kamil/pit",
         imageUrl: 'assets/images/pit.png',
         url: "https://pypi.org/project/pit",
+        difficultyLevel: 6
       ),
 
       const Project(
@@ -43,6 +46,7 @@ class ProjectLoader {
         technologies: ['Python', 'Django', 'Machine Learning', 'AI'],
         githubUrl: "https://github.com/zaid-kamil/Train_easy",
         imageUrl: 'assets/images/train_easy.png',
+        difficultyLevel: 10
       ),
 
       const Project(
@@ -62,6 +66,7 @@ class ProjectLoader {
         githubUrl:
             "https://github.com/zaid-kamil/Virtual-Assistance-For-The-Blind",
         imageUrl: 'assets/images/blind_assist.png',
+        difficultyLevel: 7
       ),
 
       const Project(
@@ -78,6 +83,7 @@ class ProjectLoader {
         ],
         githubUrl: "https://github.com/zaid-kamil/amazon-reviews-analysis",
         imageUrl: 'assets/images/amazon_reviews.png',
+        difficultyLevel: 6
       ),
 
       const Project(
@@ -88,6 +94,7 @@ class ProjectLoader {
         technologies: ['Jetpack Compose', 'Firebase', 'Kotlin', 'REST API'],
         githubUrl: "https://github.com/zaid-kamil/Fiery-App",
         imageUrl: 'assets/images/fiery_app.png',
+        difficultyLevel: 3
       ),
 
       const Project(
@@ -98,6 +105,7 @@ class ProjectLoader {
         technologies: ['Jetpack Compose', 'Kotlin', 'Animations'],
         githubUrl: "https://github.com/zaid-kamil/SpeedTest-compose",
         imageUrl: 'assets/images/speedtest_app.jpg',
+        difficultyLevel: 6
       ),
 
       const Project(
@@ -108,6 +116,7 @@ class ProjectLoader {
         technologies: ['Flutter', 'ML', 'Dart'],
         githubUrl: "https://github.com/zaid-kamil/diabetes_classifier_app",
         imageUrl: 'assets/images/diabetes.png',
+        difficultyLevel: 7
       ),
 
       const Project(
@@ -119,6 +128,7 @@ class ProjectLoader {
         githubUrl:
             "https://github.com/zaid-kamil/flutter_house_price_prediction",
         imageUrl: 'assets/images/house_price.png',
+        difficultyLevel: 8
       ),
 
       const Project(
@@ -129,6 +139,7 @@ class ProjectLoader {
         technologies: ['Flutter', 'HuggingFace API', 'AI', 'ML'],
         githubUrl: "https://github.com/zaid-kamil/image_recognition_app",
         imageUrl: 'assets/images/image_recognition.png',
+        difficultyLevel: 6
       ),
     ];
   }

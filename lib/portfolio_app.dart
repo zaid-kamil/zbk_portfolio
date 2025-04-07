@@ -16,14 +16,16 @@ class PortfolioApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: AnimatedSplashScreen(
-        splash: Image.asset("assets/gifs/loading.gif"),
+        splash: ClipOval(
+          child: Image.asset("assets/gifs/loading.gif"),
+        ),
         nextScreen: const HomeScreen(),
         // Replace with your main page widget
         duration: 1500,
         splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.fade,
         // Changed from scale
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         splashIconSize: 150,
         centered: true,
       ),
