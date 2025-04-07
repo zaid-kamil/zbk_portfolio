@@ -18,6 +18,8 @@ class Project {
   final String? imageUrl;
   final String? githubUrl;
   final String? url;
+  final int difficultyLevel;
+  final List<String>? screenshots;
 
   const Project({
     required this.category,
@@ -27,6 +29,8 @@ class Project {
     this.imageUrl,
     this.githubUrl,
     this.url,
+    this.difficultyLevel = 1,
+    this.screenshots = const [],
   });
 
 

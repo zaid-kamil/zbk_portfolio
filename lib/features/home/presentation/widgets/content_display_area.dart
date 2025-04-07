@@ -95,16 +95,10 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
             context
                 .read<ProjectDetailsBloc>()
                 .add(ShowProjectDetails(project));
-
-            // Use Builder to get fresh context
-            showModalBottomSheet(
+            // goto
+            showDialog(
               context: context,
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              builder: (builderContext) => BlocProvider.value(
-                value: context.read<ProjectDetailsBloc>(),
-                child: ProjectDetailsModal(project: project),
-              ),
+              builder: (context) => ProjectDetailsModal(project: project),
             );
           },
         ),
