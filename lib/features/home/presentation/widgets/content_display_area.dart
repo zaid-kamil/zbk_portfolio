@@ -82,24 +82,21 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
 
     return ScaleTransition(
       scale: animation,
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        child: ProjectCard(
-          title: project.title,
-          description: project.description,
-          imageUrl: project.imageUrl ?? '',
-          technologies: project.technologies,
-          demoUrl: project.url,
-          githubUrl: project.githubUrl,
-          onTap: () {
-            context.read<ProjectDetailsBloc>().add(ShowProjectDetails(project));
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ProjectDetailsPage(project: project),
-              ),
-            );
-          },
-        ),
+      child: ProjectCard(
+        title: project.title,
+        description: project.description,
+        imageUrl: project.imageUrl ?? '',
+        technologies: project.technologies,
+        demoUrl: project.url,
+        githubUrl: project.githubUrl,
+        onTap: () {
+          context.read<ProjectDetailsBloc>().add(ShowProjectDetails(project));
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ProjectDetailsPage(project: project),
+            ),
+          );
+        },
       ),
     );
   }

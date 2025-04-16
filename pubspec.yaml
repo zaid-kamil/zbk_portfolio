@@ -37,6 +37,8 @@ dependencies:
   stacked_card_carousel: any
   video_player: any
   chewie: any
+  shared_preferences: any
+  font_awesome_flutter: any
 
 dev_dependencies:
   flutter_test:

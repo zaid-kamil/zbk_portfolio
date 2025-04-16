@@ -78,9 +78,7 @@ class ProjectCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-
                         const SizedBox(height: 4),
-
                         // Description
                         Expanded(
                           child: Text(
@@ -95,7 +93,6 @@ class ProjectCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-
                         // Technologies
                         Wrap(
                           children: technologies

@@ -124,12 +124,57 @@ class ProjectCarousal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-          children: [
-
-          ]
-        ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (project.imageUrl != null) ...[
+          Expanded(
+            child: Hero(
+              tag: 'project-${project.title}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: InteractiveViewer(
+                  boundaryMargin: const EdgeInsets.all(20.0),
+                  minScale: 0.5,
+                  maxScale: 4.0,
+                  child: Image.network(
+                    project.imageUrl!,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => Container(
+                      color: Colors.grey.shade200,
+                      child: const Center(
+                        child: Icon(Icons.error_outline, size: 48),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+        if (project.screenshots?.isNotEmpty ?? false) ...[
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 100,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: project.screenshots!.length,
+              separatorBuilder: (context, _) => const SizedBox(width: 8),
+              itemBuilder: (context, index) {
+                return ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    project.screenshots![index],
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

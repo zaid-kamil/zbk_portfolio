@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gif/gif.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,10 +38,10 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
           width: 260,
           height: 260,
           fps: 60,
-          placeholder: (context) =>
-              const Center(child: CircularProgressIndicator(
-                color: Colors.white,
-              )),
+          placeholder: (context) => const Center(
+              child: CircularProgressIndicator(
+            color: Colors.white,
+          )),
           image: const AssetImage('assets/gifs/me.gif'),
         ),
         const SizedBox(height: 20),
@@ -106,8 +107,8 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
             'Programming', _skillsData.programmingSkills, Colors.blue),
         _buildSkillCategory(
             'Data Science & ML', _skillsData.dataSkills, Colors.green),
-        _buildSkillCategory(
-            'Web & Mobile', _skillsData.webMobileSkills, Colors.deepPurpleAccent),
+        _buildSkillCategory('Web & Mobile', _skillsData.webMobileSkills,
+            Colors.deepPurpleAccent),
         _buildSkillCategory(
             'DevOps & Cloud', _skillsData.devOpsSkills, Colors.purple),
         _buildSkillCategory(
@@ -140,16 +141,14 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _socialIcon(Icons.language,
+        _socialIcon(FontAwesomeIcons.bookOpenReader,
             () => _launchURL('https://socialmistry.com'), Colors.blue),
         _socialIcon(
-            Icons.phonelink_rounded,
-            () => _launchURL('https://linkedin.com/in/zaidkamil/'),
+            FontAwesomeIcons.linkedin,
+            () => _launchURL('https://linkedin.com/in/zaidbinkamil/'),
             Colors.indigo),
-        _socialIcon(
-            Icons.code,
-            () => _launchURL('https://github.com/zaidkamil'),
-            Colors.black87),
+        _socialIcon(FontAwesomeIcons.github,
+            () => _launchURL('https://github.com/zaid-kamil'), Colors.black87),
       ],
     );
   }

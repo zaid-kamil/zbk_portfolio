@@ -1,8 +1,8 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zbk_portfolio/features/home/presentation/pages/home_screen.dart';
+import 'package:zbk_portfolio/features/home/presentation/prefs_bloc/prefs_bloc.dart';
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -12,23 +12,24 @@ class PortfolioApp extends StatelessWidget {
     return MaterialApp(
       title: 'ZBK Portfolio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black54),
         useMaterial3: true,
       ),
-      home: AnimatedSplashScreen(
-        splash: ClipOval(
-          child: Image.asset("assets/gifs/loading.gif"),
-        ),
-        nextScreen: const HomeScreen(),
-        // Replace with your main page widget
-        duration: 1500,
-        splashTransition: SplashTransition.fadeTransition,
-        pageTransitionType: PageTransitionType.fade,
-        // Changed from scale
-        backgroundColor: Colors.blue,
-        splashIconSize: 150,
-        centered: true,
-      ),
+      // home: AnimatedSplashScreen(
+      //   splash: ClipOval(
+      //     child: Image.asset("assets/gifs/loading.gif"),
+      //   ),
+      //   nextScreen: const HomeScreen(),
+      //   // Replace with your main page widget
+      //
+      //   splashTransition: SplashTransition.fadeTransition,
+      //   pageTransitionType: PageTransitionType.fade,
+      //   // Changed from scale
+      //   backgroundColor: Colors.blue,
+      //   splashIconSize: 150,
+      //   centered: true,
+      // ),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
       scrollBehavior: const ScrollBehavior().copyWith(
         dragDevices: {
