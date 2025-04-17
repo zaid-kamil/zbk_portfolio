@@ -40,7 +40,7 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
           autostart: Autostart.loop,
           width: 260,
           height: 260,
-          fps: 60,
+          fps: 20,
           placeholder: (context) => const Center(
               child: CircularProgressIndicator(
             color: Colors.white,
@@ -289,44 +289,69 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
           color = state.color;
         }
 
-        return PopupMenuButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          position: PopupMenuPosition.under,
-          tooltip: "Change theme color",
-          offset: const Offset(0, 8),
-          child: Icon(
+        return IconButton(
+          icon: Icon(
             Icons.color_lens,
             color: Theme.of(context).colorScheme.brightness == Brightness.dark
                 ? Colors.white
                 : Colors.black,
           ),
-          itemBuilder: (context) => colors.map((color) {
-            return PopupMenuItem(
-              value: color,
-              child: Row(
-                children: [
-                  Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: color[1] as Color,
-                    ),
+          tooltip: "Change theme color",
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Choose a theme color'),
+                content: Container(
+                  width: 300,
+                  child: Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    alignment: WrapAlignment.center,
+                    children: colors.map((colorItem) {
+                      final String colorName = colorItem[0] as String;
+                      final Color colorValue = colorItem[1] as Color;
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Future.microtask(() {
+                            context
+                                .read<PrefsBloc>()
+                                .add(OnColorChangedEvent(colorValue));
+                          });
+                        },
+                        child: Tooltip(
+                          message: colorName,
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: colorValue,
+                              border: Border.all(
+                                color: color == colorValue
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Colors.grey.withOpacity(0.3),
+                                width: color == colorValue ? 3 : 1,
+                              ),
+                            ),
+                            child: color == colorValue
+                                ? const Icon(Icons.check, color: Colors.white)
+                                : null,
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                  const SizedBox(width: 8),
-                  Text(color[0] as String),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Close'),
+                  ),
                 ],
               ),
             );
-          }).toList(),
-          onSelected: (value) {
-            // Use a small delay before updating the color
-            Future.microtask(() {
-              final selectedColor = value[1] as Color;
-              context.read<PrefsBloc>().add(OnColorChangedEvent(selectedColor));
-            });
           },
         );
       },
@@ -335,4 +360,3 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
 }
 
 // Move to a separate file
-

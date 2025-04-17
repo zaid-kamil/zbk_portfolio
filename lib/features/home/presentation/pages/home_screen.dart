@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zbk_portfolio/features/home/presentation/prefs_bloc/prefs_bloc.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/home_content.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/sidebar.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/tab_row.dart';
-import 'package:zbk_portfolio/features/home/utils/preference_manager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

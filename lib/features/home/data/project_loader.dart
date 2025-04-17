@@ -147,6 +147,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Google Play Store', 'App Publishing'],
         url: "https://www.credential.net/3420b5d5-cc71-40f5-81fe-ca08900e2990",
+        imageUrl: "assets/images/google_play_academy.png",
       ),
       Project(
         title: 'Introduction to Data Analytics on Google Cloud',
@@ -161,6 +162,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Python'],
         url: "https://www.credly.com/badges/ba779349-5e49-4544-b39f-b192d31dbe2f/linked_in_profile",
+        imageUrl: "assets/images/python_essentials.png",
       ),
       Project(
         title: 'Data Science 101',
@@ -188,6 +190,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Python Programming'],
         url: "https://www.credly.com/badges/3d663787-b600-45a2-b799-eb7f47149001/linked_in_profile",
+        imageUrl: "assets/images/machine_learning_with_python.png",
       ),
       Project(
         title: 'SQL and Relational Databases 101',
@@ -227,6 +230,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Design Thinking'],
         url: "https://www.credly.com/badges/9c7aa05c-6ac0-4c51-82e6-82c9aa0019d9/linked_in_profile",
+        imageUrl: "assets/images/enterprise_design_thinking.png",
       ),
       Project(
         title: 'Cloud Core',
@@ -241,6 +245,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Cloud Computing'],
         url: "https://www.credly.com/badges/43555279-4cfa-449b-a929-d0ae21dc0c48/linked_in_profile",
+        imageUrl: "assets/images/ibm_cloud_essentials.png",
       ),
       Project(
         title: 'Applied Data Science with Python - Level 2',
@@ -255,6 +260,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Analytics', 'Python Programming'],
         url: "https://www.credly.com/badges/63827ced-b04d-428c-b537-5a50837c913b/linked_in_profile",
+        imageUrl: "assets/images/data_analysis_using_python.png",
       ),
       Project(
         title: 'Data Science Foundations - Level 2 (V2)',
@@ -262,6 +268,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Data Science', 'Analytics', 'Python Programming'],
         url: "https://www.credly.com/badges/84136163-94e9-4216-a87c-5025dad64ec1/linked_in_profile",
+        imageUrl: "assets/images/data_science_foundations_with_python_level_2.png",
       ),
       Project(
         title: 'Data Science Methodologies',
@@ -283,6 +290,7 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Analytics', 'Python', 'Pandas', 'Python Programming'],
         url: "https://www.credly.com/badges/c8a0b1f9-ecae-4980-9ab1-aa51c5ede18b/linked_in_profile",
+        imageUrl: "assets/images/python_for_data_science.png",
       ),
       Project(
         title: 'Data Science Foundations - Level 1',
@@ -307,13 +315,7 @@ class ProjectLoader {
           'Mobile Architecture'
         ],
         url: "https://www.credential.net/u2ufqxxm?key=1e566317c54f4f4aa751f9a229f9da9d2975e31aa3e8ab28f4efcf1001f9d4bd",
-      ),
-      Project(
-        title: 'Duolingo French Fluency: Elementary',
-        description: 'Issued by Duolingo',
-        category: ProjectCategory.certificates,
-        technologies: ['French Language'],
-        url: "https://www.duolingo.com/XaidKamil",
+        imageUrl: "assets/images/associate_android_developer.png",
       ),
       Project(
         title: 'Problem Solving (Basic)',

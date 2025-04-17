@@ -56,23 +56,14 @@ class ProjectCard extends StatelessWidget {
         tag: 'project-image-${title.hashCode}',
         child: ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
-              color: Colors.grey.shade200,
-              child: Image.asset(
-                'assets/images/default.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          child: Image.network(imageUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) =>
+                  Image.asset("assets/images/not_found.png")),
         ),
       ),
     );
   }
-
-
 
   Widget _buildContentSection(BuildContext context, bool isSmallCard) {
     return Padding(

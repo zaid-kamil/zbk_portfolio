@@ -46,13 +46,11 @@ class _PortfolioAppState extends State<PortfolioApp> {
             seedColor: seedColor,
             brightness: Brightness.dark,
           ),
-          primaryColor: seedColor,
         );
         
         final lightTheme = ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
           useMaterial3: true,
-          primaryColor: seedColor,
         );
         
         return MaterialApp(

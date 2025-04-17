@@ -6,6 +6,7 @@ import 'package:zbk_portfolio/features/home/domain/project.dart';
 import 'package:zbk_portfolio/features/home/presentation/pages/project_details_page.dart';
 import 'package:zbk_portfolio/features/home/presentation/project_bloc/project_details_bloc.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/category_filter_chips.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/certificate_card.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/project_card.dart';
 import 'package:zbk_portfolio/features/home/utils/display_utils.dart';
 
@@ -69,82 +70,151 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         mainAxisExtent: 450,
       ),
       itemCount: filteredProjects.length,
-      itemBuilder: (context, i, animation) => ScaleTransition(
-        scale: animation,
-        child: ProjectCard(
-          title: filteredProjects[i].title,
-          description: filteredProjects[i].description,
-          imageUrl: filteredProjects[i].imageUrl ?? '',
-          technologies: filteredProjects[i].technologies,
-          demoUrl: filteredProjects[i].url,
-          githubUrl: filteredProjects[i].githubUrl,
-          onTap: () {
-            context
-                .read<ProjectDetailsBloc>()
-                .add(ShowProjectDetails(filteredProjects[i]));
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                transitionDuration: const Duration(milliseconds: 800),
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    ProjectDetailsPage(project: filteredProjects[i]),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var curve = Curves.easeInOutCubic;
-                  var curveTween = CurveTween(curve: curve);
-                  return FadeTransition(
-                    opacity: animation.drive(curveTween),
-                    child: child,
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
+      // Using AnimationBuilder with Cached projections for better performance
+      itemBuilder: (context, i, animation) {
+        final project = filteredProjects[i]; // Cache the project reference
+
+        return ScaleTransition(
+          scale: animation,
+          child: ProjectCard(
+            title: project.title,
+            description: project.description,
+            imageUrl: project.imageUrl ?? '',
+            technologies: project.technologies,
+            demoUrl: project.url,
+            githubUrl: project.githubUrl,
+            onTap: () {
+              // Use Builder to defer reading the bloc until needed
+              context
+                  .read<ProjectDetailsBloc>()
+                  .add(ShowProjectDetails(project));
+
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  transitionDuration: const Duration(milliseconds: 500),
+                  // Reduced for better performance
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      ProjectDetailsPage(project: project),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    // Simplified animation curve
+                    return FadeTransition(
+                      opacity:
+                          animation.drive(CurveTween(curve: Curves.easeOut)),
+                      child: child,
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
-
 
   Widget _buildContent(List<Project> projects, ThemeData theme) {
     final primaryColor = theme.primaryColorDark;
     final backgroundColor = theme.colorScheme.onPrimary;
+    switch (widget.category) {
+      case ProjectCategory.aboutMe:
+        return Placeholder();
+      case ProjectCategory.certificates:
+        return Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border: Border(
+              bottom: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+              left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+              right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+            ),
+          ),
+          child: Column(
+            children: [
+              _buildHeader(context),
+              const SizedBox(height: 16),
+              Expanded(
+                child: CustomScrollView(
+                  controller: ScrollController(),
+                  slivers: [
+                    SliverPadding(
+                      padding: const EdgeInsets.all(16),
+                      sliver: _buildCertificateGrid(
+                        projects,
+                        context,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      case ProjectCategory.publications:
+        return Placeholder();
+      default:
+        return Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border: Border(
+              bottom: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+              left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+              right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+            ),
+          ),
+          child: Column(
+            children: [
+              _buildHeader(context),
+              CategoryFilterChips(
+                categories: DisplayUtils.getCategories(projects),
+                selectedCategory: _selectedCategory,
+                onCategorySelected: (category) => setState(() {
+                  _selectedCategory = category;
+                }),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: CustomScrollView(
+                  controller: ScrollController(),
+                  slivers: [
+                    SliverPadding(
+                      padding: const EdgeInsets.all(16),
+                      sliver: _buildProjectGrid(projects, context),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+    }
+  }
+
+  Widget _buildCertificateGrid(
+      List<Project> allProjects, BuildContext context) {
+    // Get filtered projects
     final filteredProjects = DisplayUtils.getFilteredProjects(
-      projects,
+      allProjects,
       _selectedCategory,
     );
 
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border(
-          bottom: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-          left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-          right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-        ),
+    return LiveSliverGrid(
+      controller: ScrollController(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: DisplayUtils.getGridCount(context),
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        mainAxisExtent: 300,
       ),
-      child: Column(
-        children: [
-          _buildHeader(context),
-          CategoryFilterChips(
-            categories: DisplayUtils.getCategories(projects),
-            selectedCategory: _selectedCategory,
-            onCategorySelected: (category) => setState(() {
-              _selectedCategory = category;
-            }),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: CustomScrollView(
-              controller: ScrollController(),
-              slivers: [
-                SliverPadding(
-                  padding: const EdgeInsets.all(16),
-                  sliver: _buildProjectGrid(projects, context),
-                ),
-              ],
-            ),
-          ),
-        ],
+      itemCount: filteredProjects.length,
+      itemBuilder: (context, i, animation) => ScaleTransition(
+        scale: animation,
+        child: CertificateCard(
+          title: filteredProjects[i].title,
+          issuedBy: filteredProjects[i].description ?? '',
+          credentialUrl: filteredProjects[i].url,
+          imageUrl: filteredProjects[i].imageUrl ?? '',
+        ),
       ),
     );
   }
