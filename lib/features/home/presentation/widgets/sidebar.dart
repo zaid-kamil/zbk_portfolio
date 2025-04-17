@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gif/gif.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zbk_portfolio/features/home/data/skills_data.dart';
+import 'package:zbk_portfolio/features/home/presentation/prefs_bloc/prefs_bloc.dart';
 
 class Sidebar extends StatefulWidget {
   const Sidebar({super.key});
@@ -45,14 +48,7 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
           image: const AssetImage('assets/gifs/me.gif'),
         ),
         const SizedBox(height: 20),
-        Text(
-          'Zaid Kamil',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        Text('Zaid Kamil', style: Theme.of(context).textTheme.displaySmall),
       ],
     );
   }
@@ -141,6 +137,7 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // our website
         _socialIcon(FontAwesomeIcons.bookOpenReader,
             () => _launchURL('https://socialmistry.com'), Colors.blue),
         _socialIcon(
@@ -204,7 +201,10 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
+                    const SizedBox(height: 30),
                     _buildProfileSection(),
+                    const SizedBox(height: 30),
+                    _buildPrefsActions(),
                     const SizedBox(height: 30),
                     _buildContactInfo(),
                     const SizedBox(height: 16),
@@ -221,55 +221,119 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
       ],
     );
   }
+
+  Widget _buildPrefsActions() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text(
+          'Change theme',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Row(
+          children: actionList,
+        ),
+      ],
+    );
+  }
+
+  List<Widget> get actionList {
+    return [
+      changeThemeAction(),
+      const SizedBox(width: 12),
+      changeColorAction(),
+    ];
+  }
+
+  Widget changeThemeAction() {
+    return BlocBuilder<PrefsBloc, PrefsState>(
+      builder: (context, state) {
+        if (state is PrefsColorChangedState) {
+          final isDarkMode = state.themeMode == ThemeMode.dark;
+          return IconButton(
+            tooltip: '${isDarkMode ? "Light" : "Dark"} mode',
+            icon: Icon(
+              isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              context.read<PrefsBloc>().add(OnThemeToggleEvent());
+            },
+          );
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  Widget changeColorAction() {
+    var colors = [
+      ["Black", Colors.black],
+      ["Red", Colors.red],
+      ["Green", Colors.green],
+      ["Blue", Colors.blue],
+      ["Cyan", Colors.cyanAccent],
+      ["Purple", Colors.purple],
+      ["Orange", Colors.orange],
+      ["Pink", Colors.pink],
+      ["Teal", Colors.teal],
+    ];
+
+    return BlocBuilder<PrefsBloc, PrefsState>(
+      builder: (context, state) {
+        Color color = Colors.red;
+        if (state is PrefsColorChangedState) {
+          color = state.color;
+        }
+
+        return PopupMenuButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          position: PopupMenuPosition.under,
+          tooltip: "Change theme color",
+          offset: const Offset(0, 8),
+          child: Icon(
+            Icons.color_lens,
+            color: Theme.of(context).colorScheme.brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
+          ),
+          itemBuilder: (context) => colors.map((color) {
+            return PopupMenuItem(
+              value: color,
+              child: Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: color[1] as Color,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(color[0] as String),
+                ],
+              ),
+            );
+          }).toList(),
+          onSelected: (value) {
+            // Use a small delay before updating the color
+            Future.microtask(() {
+              final selectedColor = value[1] as Color;
+              context.read<PrefsBloc>().add(OnColorChangedEvent(selectedColor));
+            });
+          },
+        );
+      },
+    );
+  }
 }
 
 // Move to a separate file
-class SkillsData {
-  final List<String> programmingSkills = [
-    'Python',
-    'Java',
-    'Kotlin',
-    'Dart',
-    'SQL'
-  ];
-  final List<String> dataSkills = [
-    'TensorFlow',
-    'PyTorch',
-    'Scikit-learn',
-    'OpenCV',
-    'Pandas',
-    'NumPy'
-  ];
-  final List<String> webMobileSkills = [
-    'Flask',
-    'Django',
-    'Jetpack Compose',
-    'Flutter',
-    'Gradio',
-    'Streamlit'
-  ];
-  final List<String> devOpsSkills = [
-    'Docker',
-    'Kubernetes',
-    'Git',
-    'CI/CD',
-    'MLOps',
-    'AWS',
-    'Firebase'
-  ];
-  final List<String> otherSkills = [
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'React',
-    'Node.js',
-    'FastAPI'
-  ];
-  final List<String> toolsSkills = [
-    'GitHub',
-    'Jupyter Notebook',
-    'Google Colab',
-    'VS Code',
-    'PyCharm'
-  ];
-}
+

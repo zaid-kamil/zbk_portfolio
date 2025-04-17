@@ -22,7 +22,7 @@ class FancyCard extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               width: 250,
               height: 250,
               child: image,
@@ -130,7 +130,7 @@ class ProjectCarousal extends StatelessWidget {
         if (project.imageUrl != null) ...[
           Expanded(
             child: Hero(
-              tag: 'project-${project.title}',
+              tag: 'project-image-${project.title.hashCode}',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: InteractiveViewer(
@@ -177,4 +177,6 @@ class ProjectCarousal extends StatelessWidget {
       ],
     );
   }
+
+
 }

@@ -58,6 +58,13 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
 
   Widget _buildProjectGrid(
       List<Project> displayProjects, BuildContext context) {
+    // Get filtered and paginated projects first
+    final paginatedProjects = DisplayUtils.getFilteredAndPaginatedProjects(
+      displayProjects,
+      _selectedCategory,
+      _currentPage,
+    );
+
     return LiveSliverGrid(
       controller: ScrollController(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -66,9 +73,39 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         mainAxisSpacing: 16,
         mainAxisExtent: 450,
       ),
-      itemCount: displayProjects.length,
-      itemBuilder: (context, i, animation) =>
-          _buildProjectCard(context, i, animation, displayProjects),
+      itemCount: paginatedProjects.length, // Use paginated length
+      itemBuilder: (context, i, animation) => ScaleTransition(
+        scale: animation,
+        child: ProjectCard(
+          title: paginatedProjects[i].title,
+          description: paginatedProjects[i].description,
+          imageUrl: paginatedProjects[i].imageUrl ?? '',
+          technologies: paginatedProjects[i].technologies,
+          demoUrl: paginatedProjects[i].url,
+          githubUrl: paginatedProjects[i].githubUrl,
+          onTap: () {
+            context
+                .read<ProjectDetailsBloc>()
+                .add(ShowProjectDetails(paginatedProjects[i]));
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                transitionDuration: const Duration(milliseconds: 800),
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    ProjectDetailsPage(project: paginatedProjects[i]),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var curve = Curves.easeInOutCubic;
+                  var curveTween = CurveTween(curve: curve);
+                  return FadeTransition(
+                    opacity: animation.drive(curveTween),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -92,8 +129,20 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         onTap: () {
           context.read<ProjectDetailsBloc>().add(ShowProjectDetails(project));
           Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ProjectDetailsPage(project: project),
+            PageRouteBuilder(
+              transitionDuration: const Duration(milliseconds: 800),
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  ProjectDetailsPage(project: project),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var curve = Curves.easeInOutCubic;
+                var curveTween = CurveTween(curve: curve);
+
+                return FadeTransition(
+                  opacity: animation.drive(curveTween),
+                  child: child,
+                );
+              },
             ),
           );
         },
@@ -175,24 +224,21 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
-      child: FutureBuilder<List<Project>>(
-        future: _projectsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No projects found.'));
-          }
+    return FutureBuilder<List<Project>>(
+      future: _projectsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No projects found.'));
+        }
 
-          return _buildContent(snapshot.data!, Theme.of(context));
-        },
-      ),
+        return _buildContent(snapshot.data!, Theme.of(context));
+      },
     );
   }
 }

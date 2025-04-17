@@ -38,7 +38,7 @@ class _TabRowState extends State<TabRow> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final primaryColor = theme.primaryColorDark;
+    final primaryColor = theme.primaryColorLight;
     final backgroundColor = theme.colorScheme.onPrimary;
 
     return RepaintBoundary(

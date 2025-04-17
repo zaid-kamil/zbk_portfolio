@@ -6,6 +6,9 @@ import 'package:zbk_portfolio/features/home/presentation/tab_bloc/tab_bloc.dart'
 import 'package:zbk_portfolio/portfolio_app.dart';
 
 void main() {
+  // initialize bindings
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider<TabBloc>.value(
@@ -15,10 +18,7 @@ void main() {
         create: (context) => ProjectDetailsBloc(),
       ),
       BlocProvider<PrefsBloc>(
-        create: (context) {
-          bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-          return PrefsBloc()..add(OnThemeChangedEvent(isDarkMode));
-        },
+        create: (context) => PrefsBloc()..add(OnColorChangedEvent(Colors.black54)),
       )
     ], child: const PortfolioApp()),
   );

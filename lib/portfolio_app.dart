@@ -9,35 +9,55 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ZBK Portfolio',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black54),
-        useMaterial3: true,
-      ),
-      // home: AnimatedSplashScreen(
-      //   splash: ClipOval(
-      //     child: Image.asset("assets/gifs/loading.gif"),
-      //   ),
-      //   nextScreen: const HomeScreen(),
-      //   // Replace with your main page widget
-      //
-      //   splashTransition: SplashTransition.fadeTransition,
-      //   pageTransitionType: PageTransitionType.fade,
-      //   // Changed from scale
-      //   backgroundColor: Colors.blue,
-      //   splashIconSize: 150,
-      //   centered: true,
-      // ),
-      home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
-      scrollBehavior: const ScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-        },
-      ),
+    return BlocBuilder<PrefsBloc, PrefsState>(
+      buildWhen: (previous, current) {
+        // Only rebuild on actual state changes
+        if (previous is PrefsColorChangedState && current is PrefsColorChangedState) {
+          return previous.color != current.color || previous.themeMode != current.themeMode;
+        }
+        return true;
+      },
+      builder: (context, state) {
+        // Default values
+        ThemeMode themeMode = ThemeMode.system;
+        Color seedColor = Colors.black;
+        
+        if (state is PrefsColorChangedState) {
+          seedColor = state.color;
+          themeMode = state.themeMode;
+        }
+        
+        // Pre-generate the themes to avoid rebuilding them frequently
+        final darkTheme = ThemeData.dark().copyWith(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: seedColor,
+            brightness: Brightness.dark,
+          ),
+          primaryColor: seedColor,
+        );
+        
+        final lightTheme = ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
+          useMaterial3: true,
+          primaryColor: seedColor,
+        );
+        
+        return MaterialApp(
+          title: 'ZBK Portfolio',
+          darkTheme: darkTheme,
+          theme: lightTheme,
+          themeMode: themeMode,
+          home: const HomeScreen(),
+          debugShowCheckedModeBanner: false,
+          scrollBehavior: const ScrollBehavior().copyWith(
+            dragDevices: {
+              PointerDeviceKind.mouse,
+              PointerDeviceKind.touch,
+              PointerDeviceKind.stylus,
+            },
+          ),
+        );
+      },
     );
   }
 }

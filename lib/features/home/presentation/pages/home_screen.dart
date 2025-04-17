@@ -33,93 +33,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Sidebar(),
                 ),
           appBar: isDesktop
-              ? AppBar(
-                  title: const Text("Zaid Kamil's Portfolio"),
-                  clipBehavior: Clip.antiAlias,
-                  actions: [
-                    changeThemeAction(),
-                    const SizedBox(width: 16),
-                    changeColorAction(),
-                    const SizedBox(width: 16),
-                    changeFontAction(),
-                  ],
-                )
+              ? null
               : AppBar(title: const Text("Zaid Kamil's Portfolio")),
-          body: Row(
-            children: [
-              if (isDesktop) const Sidebar(),
-              Expanded(
-                child: Container(
-                  color: Colors.white,
+          body: ColoredBox(
+            color: backgroundColor,
+            child: Row(
+              children: [
+                if (isDesktop) const Sidebar(),
+                Expanded(
                   child: Column(
                     children: [
                       TabRow(
                         onTabSelected: (index) =>
                             setState(() => selectedIndex = index),
                       ),
-                      const Expanded(child: HomeContent()),
+                      Expanded(
+                          child: Padding(
+                        padding:
+                            const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+                        child: ColoredBox(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            child: HomeContent()),
+                      )),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
-      },
-    );
-  }
-
-  changeFontAction() {
-    List<int> fontSizes = [12, 14, 16, 18, 20];
-    return PopupMenuButton(
-      icon: const Icon(Icons.font_download),
-      itemBuilder: (context) => fontSizes.map((size) {
-        return PopupMenuItem(
-          value: size,
-          child: Text(
-            '$size px',
-            style: TextStyle(fontSize: size.toDouble()),
-          ),
-        );
-      }).toList(),
-      onSelected: (value) {
-        context.read<PrefsBloc>().add(OnFontSizeChangedEvent(value as double));
-      },
-    );
-  }
-
-  changeThemeAction() {
-    // switch between light and dark theme
-    return Switch(
-        value: PreferenceManager().getTheme() != ThemeMode.dark,
-        onChanged: (value) {
-          context.read<PrefsBloc>().add(OnThemeChangedEvent(value));
-        });
-  }
-
-  changeColorAction() {
-    var colors = [
-      Colors.red,
-      Colors.green,
-      Colors.blue,
-      Colors.yellow,
-      Colors.purple,
-      Colors.orange,
-    ];
-    return PopupMenuButton(
-      icon: const Icon(Icons.color_lens),
-      itemBuilder: (context) => colors.map((color) {
-        return PopupMenuItem(
-          value: color,
-          child: Container(
-            width: 24,
-            height: 24,
-            color: color,
-          ),
-        );
-      }).toList(),
-      onSelected: (value) {
-        context.read<PrefsBloc>().add(OnColorChangedEvent(value as Color));
       },
     );
   }
