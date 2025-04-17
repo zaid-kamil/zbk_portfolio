@@ -104,47 +104,6 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
     );
   }
 
-  Widget _buildProjectCard(BuildContext context, int i,
-      Animation<double> animation, List<Project> projects) {
-    final filteredProjects = DisplayUtils.getFilteredProjects(
-      projects,
-      _selectedCategory,
-    );
-
-    final project = filteredProjects[i];
-
-    return ScaleTransition(
-      scale: animation,
-      child: ProjectCard(
-        title: project.title,
-        description: project.description,
-        imageUrl: project.imageUrl ?? '',
-        technologies: project.technologies,
-        demoUrl: project.url,
-        githubUrl: project.githubUrl,
-        onTap: () {
-          context.read<ProjectDetailsBloc>().add(ShowProjectDetails(project));
-          Navigator.of(context).push(
-            PageRouteBuilder(
-              transitionDuration: const Duration(milliseconds: 800),
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  ProjectDetailsPage(project: project),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var curve = Curves.easeInOutCubic;
-                var curveTween = CurveTween(curve: curve);
-
-                return FadeTransition(
-                  opacity: animation.drive(curveTween),
-                  child: child,
-                );
-              },
-            ),
-          );
-        },
-      ),
-    );
-  }
 
   Widget _buildContent(List<Project> projects, ThemeData theme) {
     final primaryColor = theme.primaryColorDark;

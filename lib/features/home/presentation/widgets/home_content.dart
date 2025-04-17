@@ -23,7 +23,7 @@ class HomeContent extends StatelessWidget {
     return BlocBuilder<TabBloc, TabState>(
       builder: (context, state) {
         return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 1500),
           child: ContentDisplayArea(
             key: ValueKey(state.runtimeType),
             category: _getCategoryFromState(state),

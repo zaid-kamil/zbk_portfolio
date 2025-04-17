@@ -51,3 +51,35 @@ flutter:
   assets:
     - assets/images/
     - assets/gifs/
+
+# Flutter Native Splash configuration
+flutter_native_splash:
+  # Background color for the splash screen
+  color: "#000000"
+
+  # Image can be a .gif file
+  image: assets/gifs/loading.gif
+
+  # Branding image can be added to make it appear in a corner
+  # branding: assets/images/branding.png
+
+  # Background color for the splash screen in dark mode
+  color_dark: "#000000"
+
+  # Image for dark mode (can be the same)
+  image_dark: assets/gifs/loading.gif
+
+  # Android 12 handles the splash screen differently
+  android_12:
+    image: assets/gifs/loading.gif
+    color: "#000000"
+    icon_background_color: "#000000"
+    image_dark: assets/gifs/loading.gif
+    color_dark: "#000000"
+    icon_background_color_dark: "#000000"
+
+  # Disable fullscreen mode
+  fullscreen: false
+
+  # Ensure GIFs work on web
+  web: true
