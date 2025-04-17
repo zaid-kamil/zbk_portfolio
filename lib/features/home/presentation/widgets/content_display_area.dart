@@ -22,8 +22,6 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
   final _localDataSource = LocalProjectDataSource();
   late Future<List<Project>> _projectsFuture;
   String _selectedCategory = 'All';
-  int _currentPage = 0;
-  int _totalItems = 0;
 
   @override
   void initState() {
@@ -37,7 +35,6 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
     if (oldWidget.category != widget.category) {
       setState(() {
         _selectedCategory = 'All';
-        _currentPage = 0;
         _projectsFuture = _loadProjects();
       });
     }
@@ -56,13 +53,11 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
     );
   }
 
-  Widget _buildProjectGrid(
-      List<Project> displayProjects, BuildContext context) {
-    // Get filtered and paginated projects first
-    final paginatedProjects = DisplayUtils.getFilteredAndPaginatedProjects(
-      displayProjects,
+  Widget _buildProjectGrid(List<Project> allProjects, BuildContext context) {
+    // Get filtered projects
+    final filteredProjects = DisplayUtils.getFilteredProjects(
+      allProjects,
       _selectedCategory,
-      _currentPage,
     );
 
     return LiveSliverGrid(
@@ -73,25 +68,25 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         mainAxisSpacing: 16,
         mainAxisExtent: 450,
       ),
-      itemCount: paginatedProjects.length, // Use paginated length
+      itemCount: filteredProjects.length,
       itemBuilder: (context, i, animation) => ScaleTransition(
         scale: animation,
         child: ProjectCard(
-          title: paginatedProjects[i].title,
-          description: paginatedProjects[i].description,
-          imageUrl: paginatedProjects[i].imageUrl ?? '',
-          technologies: paginatedProjects[i].technologies,
-          demoUrl: paginatedProjects[i].url,
-          githubUrl: paginatedProjects[i].githubUrl,
+          title: filteredProjects[i].title,
+          description: filteredProjects[i].description,
+          imageUrl: filteredProjects[i].imageUrl ?? '',
+          technologies: filteredProjects[i].technologies,
+          demoUrl: filteredProjects[i].url,
+          githubUrl: filteredProjects[i].githubUrl,
           onTap: () {
             context
                 .read<ProjectDetailsBloc>()
-                .add(ShowProjectDetails(paginatedProjects[i]));
+                .add(ShowProjectDetails(filteredProjects[i]));
             Navigator.of(context).push(
               PageRouteBuilder(
                 transitionDuration: const Duration(milliseconds: 800),
                 pageBuilder: (context, animation, secondaryAnimation) =>
-                    ProjectDetailsPage(project: paginatedProjects[i]),
+                    ProjectDetailsPage(project: filteredProjects[i]),
                 transitionsBuilder:
                     (context, animation, secondaryAnimation, child) {
                   var curve = Curves.easeInOutCubic;
@@ -111,11 +106,12 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
 
   Widget _buildProjectCard(BuildContext context, int i,
       Animation<double> animation, List<Project> projects) {
-    final project = DisplayUtils.getFilteredAndPaginatedProjects(
+    final filteredProjects = DisplayUtils.getFilteredProjects(
       projects,
       _selectedCategory,
-      _currentPage,
-    )[i];
+    );
+
+    final project = filteredProjects[i];
 
     return ScaleTransition(
       scale: animation,
@@ -150,39 +146,13 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
     );
   }
 
-  Widget _buildPaginationDots(int pageCount, Color primaryColor) {
-    if (pageCount <= 1) return const SizedBox.shrink();
-
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(pageCount, (index) {
-          return IconButton(
-            icon: Icon(
-              Icons.circle,
-              color: _currentPage == index
-                  ? primaryColor
-                  : primaryColor.withAlpha(150),
-            ),
-            onPressed: () => setState(() => _currentPage = index),
-          );
-        }),
-      ),
-    );
-  }
-
   Widget _buildContent(List<Project> projects, ThemeData theme) {
     final primaryColor = theme.primaryColorDark;
     final backgroundColor = theme.colorScheme.onPrimary;
-    final pageCount = DisplayUtils.getPageCount(projects, _selectedCategory);
-    final displayProjects = DisplayUtils.getFilteredAndPaginatedProjects(
+    final filteredProjects = DisplayUtils.getFilteredProjects(
       projects,
       _selectedCategory,
-      _currentPage,
     );
-
-    _totalItems = DisplayUtils.getTotalItemCount(projects, _selectedCategory);
 
     return Container(
       decoration: BoxDecoration(
@@ -201,7 +171,6 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
             selectedCategory: _selectedCategory,
             onCategorySelected: (category) => setState(() {
               _selectedCategory = category;
-              _currentPage = 0;
             }),
           ),
           const SizedBox(height: 16),
@@ -211,12 +180,11 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
               slivers: [
                 SliverPadding(
                   padding: const EdgeInsets.all(16),
-                  sliver: _buildProjectGrid(displayProjects, context),
+                  sliver: _buildProjectGrid(projects, context),
                 ),
               ],
             ),
           ),
-          _buildPaginationDots(pageCount, primaryColor),
         ],
       ),
     );

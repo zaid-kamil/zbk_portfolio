@@ -276,7 +276,6 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
       ["Red", Colors.red],
       ["Green", Colors.green],
       ["Blue", Colors.blue],
-      ["Cyan", Colors.cyanAccent],
       ["Purple", Colors.purple],
       ["Orange", Colors.orange],
       ["Pink", Colors.pink],

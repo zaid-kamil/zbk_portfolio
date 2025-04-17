@@ -24,6 +24,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: any
   flutter_svg: any
+  flutter_native_splash: any
   equatable: any
   url_launcher: any
   gif: any

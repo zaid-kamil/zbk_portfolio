@@ -58,4 +58,14 @@ class DisplayUtils {
             .where((p) => p.technologies.contains(selectedCategory))
             .length;
   }
+
+  static List<Project> getFilteredProjects(
+      List<Project> projects, String selectedCategory) {
+    if (selectedCategory == 'All') {
+      return projects;
+    }
+    return projects
+        .where((project) => project.technologies.contains(selectedCategory))
+        .toList();
+  }
 }
