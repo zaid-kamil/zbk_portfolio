@@ -9,5 +9,5 @@ final class PrefsColorChangedState extends PrefsState {
   final Color color;
   final ThemeMode themeMode;
 
-  PrefsColorChangedState(this.color, {this.themeMode = ThemeMode.system});
+  PrefsColorChangedState(this.color, {this.themeMode = ThemeMode.light});
 }

@@ -36,7 +36,7 @@ class CertificateCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildImageSection(),
+              _buildImageSection(context),
               _buildContentSection(context, isSmallCard),
             ],
           ),
@@ -45,7 +45,8 @@ class CertificateCard extends StatelessWidget {
     );
   }
 
-  Widget _buildImageSection() {
+  Widget _buildImageSection(BuildContext context) {
+    var theme = Theme.of(context);
     return SizedBox(
       height: 140, // Smaller height than project card
       width: double.infinity,
@@ -57,7 +58,7 @@ class CertificateCard extends StatelessWidget {
           child: Image.network(imageUrl,
               fit: BoxFit.contain,
               errorBuilder: (_, __, ___) => Container(
-                    color: Colors.grey.shade200,
+                    color: theme.colorScheme.primaryContainer.withAlpha(50),
                     child: const Center(
                       child: FaIcon(
                         FontAwesomeIcons.award,

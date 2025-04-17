@@ -22,6 +22,9 @@ class _PortfolioAppState extends State<PortfolioApp> {
 
   @override
   Widget build(BuildContext context) {
+    Color seedColor = Colors.red;
+    ThemeMode themeMode = ThemeMode.light;
+
     return BlocBuilder<PrefsBloc, PrefsState>(
       buildWhen: (previous, current) {
         // Only rebuild on actual state changes
@@ -31,10 +34,6 @@ class _PortfolioAppState extends State<PortfolioApp> {
         return true;
       },
       builder: (context, state) {
-        // Default values
-        ThemeMode themeMode = ThemeMode.system;
-        Color seedColor = Colors.black;
-        
         if (state is PrefsColorChangedState) {
           seedColor = state.color;
           themeMode = state.themeMode;

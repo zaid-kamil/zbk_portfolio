@@ -55,7 +55,7 @@ flutter:
 # Flutter Native Splash configuration
 flutter_native_splash:
   # Background color for the splash screen
-  color: "#000000"
+  color: "#ffffff"
 
   # Image can be a .gif file
   image: assets/gifs/loading.gif
@@ -64,7 +64,7 @@ flutter_native_splash:
   # branding: assets/images/branding.png
 
   # Background color for the splash screen in dark mode
-  color_dark: "#000000"
+  color_dark: "#ffffff"
 
   # Image for dark mode (can be the same)
   image_dark: assets/gifs/loading.gif
@@ -72,11 +72,11 @@ flutter_native_splash:
   # Android 12 handles the splash screen differently
   android_12:
     image: assets/gifs/loading.gif
-    color: "#000000"
-    icon_background_color: "#000000"
+    color: "#ffffff"
+    icon_background_color: "#ffffff"
     image_dark: assets/gifs/loading.gif
-    color_dark: "#000000"
-    icon_background_color_dark: "#000000"
+    color_dark: "#ffffff"
+    icon_background_color_dark: "#ffffff"
 
   # Disable fullscreen mode
   fullscreen: false
