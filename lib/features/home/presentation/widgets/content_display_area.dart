@@ -8,7 +8,10 @@ import 'package:zbk_portfolio/features/home/presentation/project_bloc/project_de
 import 'package:zbk_portfolio/features/home/presentation/widgets/category_filter_chips.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/certificate_card.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/project_card.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/publication_container.dart';
 import 'package:zbk_portfolio/features/home/utils/display_utils.dart';
+
+import 'about_me_container.dart';
 
 class ContentDisplayArea extends StatefulWidget {
   final ProjectCategory category;
@@ -118,7 +121,23 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
     final backgroundColor = theme.colorScheme.onPrimary;
     switch (widget.category) {
       case ProjectCategory.aboutMe:
-        return Placeholder();
+        return Container(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border(
+                bottom:
+                    BorderSide(color: primaryColor.withAlpha(150), width: 1),
+                left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+                right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+              ),
+            ),
+            child: Column(
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 16),
+                Expanded(child: AboutMeContainer()),
+              ],
+            ));
       case ProjectCategory.certificates:
         return Container(
           decoration: BoxDecoration(
@@ -151,7 +170,23 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
           ),
         );
       case ProjectCategory.publications:
-        return Placeholder();
+        return Container(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border(
+                bottom:
+                    BorderSide(color: primaryColor.withAlpha(150), width: 1),
+                left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+                right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+              ),
+            ),
+            child: Column(
+              children: [
+                _buildHeader(context),
+                const SizedBox(height: 16),
+                Expanded(child: PublicationContainer()),
+              ],
+            ));
       default:
         return Container(
           decoration: BoxDecoration(
@@ -230,9 +265,9 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
-        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No projects found.'));
-        }
+        // if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        //   return const Center(child: Text('No projects found.'));
+        // }
 
         return _buildContent(snapshot.data!, Theme.of(context));
       },

@@ -42,6 +42,7 @@ class _ProjectInfoState extends State<ProjectInfo>
     return FadeTransition(
       opacity: _fadeInAnimation,
       child: Card.filled(
+        color: Theme.of(context).colorScheme.surface,
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(

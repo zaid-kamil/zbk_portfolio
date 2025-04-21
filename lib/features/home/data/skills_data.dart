@@ -24,9 +24,7 @@ class SkillsData {
   ];
   final List<String> devOpsSkills = [
     'Docker',
-    'Kubernetes',
     'Git',
-    'CI/CD',
     'MLOps',
     'AWS',
     'Firebase'
@@ -35,8 +33,6 @@ class SkillsData {
     'HTML',
     'CSS',
     'JavaScript',
-    'React',
-    'Node.js',
     'FastAPI'
   ];
   final List<String> toolsSkills = [

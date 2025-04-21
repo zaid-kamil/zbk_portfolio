@@ -5,7 +5,7 @@ part 'prefs_event.dart';
 part 'prefs_state.dart';
 
 class PrefsBloc extends Bloc<PrefsEvent, PrefsState> {
-  PrefsBloc() : super(PrefsColorChangedState(Colors.red, themeMode: ThemeMode.light)) {
+  PrefsBloc() : super(PrefsColorChangedState(Colors.black)) {
     on<OnColorChangedEvent>((event, emit) {
       // Check if we're already using this color to avoid unnecessary updates
       if (state is PrefsColorChangedState) {

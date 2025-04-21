@@ -99,23 +99,17 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionHeader('Skills'),
-        _buildSkillCategory(
-            'Programming', _skillsData.programmingSkills, Colors.blue),
-        _buildSkillCategory(
-            'Data Science & ML', _skillsData.dataSkills, Colors.green),
-        _buildSkillCategory('Web & Mobile', _skillsData.webMobileSkills,
-            Colors.deepPurpleAccent),
-        _buildSkillCategory(
-            'DevOps & Cloud', _skillsData.devOpsSkills, Colors.purple),
-        _buildSkillCategory(
-            'Other Skills', _skillsData.otherSkills, Colors.red),
-        _buildSkillCategory(
-            'Tools & IDEs', _skillsData.toolsSkills, Colors.teal),
+        _buildSkillCategory('Programming', _skillsData.programmingSkills),
+        _buildSkillCategory('Data Science & ML', _skillsData.dataSkills),
+        _buildSkillCategory('Web & Mobile', _skillsData.webMobileSkills),
+        _buildSkillCategory('DevOps & Cloud', _skillsData.devOpsSkills),
+        _buildSkillCategory('Other Skills', _skillsData.otherSkills),
+        _buildSkillCategory('Tools & IDEs', _skillsData.toolsSkills),
       ],
     );
   }
 
-  Widget _buildSkillCategory(String title, List<String> skills, Color color) {
+  Widget _buildSkillCategory(String title, List<String> skills) {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Column(
@@ -127,7 +121,7 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
                   fontWeight: FontWeight.w500,
                   color: Colors.white70)),
           const SizedBox(height: 4),
-          _buildSkillsChips(skills, color),
+          _buildSkillsChips(skills),
         ],
       ),
     );
@@ -164,18 +158,18 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSkillsChips(List<String> skills, Color color) {
+  Widget _buildSkillsChips(
+    List<String> skills,
+  ) {
     return Wrap(
       spacing: 6.0,
       runSpacing: 6.0,
       children: skills
           .map((skill) => Chip(
-                backgroundColor: color.withAlpha(255),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                label: Text(skill,
-                    style: const TextStyle(color: Colors.white, fontSize: 12)),
+                label: Text(skill),
                 padding: const EdgeInsets.all(4),
               ))
           .toList(),
@@ -205,13 +199,22 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
                     _buildProfileSection(),
                     const SizedBox(height: 30),
                     _buildPrefsActions(),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     _buildContactInfo(),
                     const SizedBox(height: 16),
                     _buildSkillsSection(),
                     const SizedBox(height: 20),
                     _buildSocialLinks(),
                     const SizedBox(height: 20),
+                    Center(
+                      child: Text(
+                        'Build with Flutter & 💖',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 12,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -273,13 +276,12 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
   Widget changeColorAction() {
     var colors = [
       ["Black", Colors.black],
-      ["Red", Colors.red],
       ["Green", Colors.green],
-      ["Blue", Colors.blue],
-      ["Purple", Colors.purple],
-      ["Orange", Colors.orange],
-      ["Pink", Colors.pink],
       ["Teal", Colors.teal],
+      ["Red", Colors.red],
+      ["Blue", Colors.blue],
+      ["Sky blue", Colors.lightBlue],
+      ["Purple", Colors.purple],
     ];
 
     return BlocBuilder<PrefsBloc, PrefsState>(
@@ -302,7 +304,7 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
               context: context,
               builder: (context) => AlertDialog(
                 title: const Text('Choose a theme color'),
-                content: Container(
+                content: SizedBox(
                   width: 300,
                   child: Wrap(
                     spacing: 10,
@@ -331,7 +333,7 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
                               border: Border.all(
                                 color: color == colorValue
                                     ? Theme.of(context).colorScheme.primary
-                                    : Colors.grey.withOpacity(0.3),
+                                    : Colors.grey.withValues(alpha: 0.3),
                                 width: color == colorValue ? 3 : 1,
                               ),
                             ),

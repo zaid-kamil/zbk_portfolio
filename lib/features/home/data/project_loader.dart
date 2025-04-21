@@ -15,15 +15,16 @@ class ProjectLoader {
       ),
       // New data science projects
       const Project(
-          category: ProjectCategory.dataScience,
-          title: 'Dputils Library',
-          description:
-              'A Python utility library to simplify web scraping and document data extraction. Integrated support for handling structured and unstructured data efficiently. Used by developers for data mining, NLP preprocessing, and automation tasks.',
-          technologies: ['Python', 'Web Scraping', 'NLP', 'Data Mining'],
-          url: "https://pypi.org/project/dputils",
-          githubUrl: "https://github.com/digipodium/dputils",
-          imageUrl: 'assets/images/dputils.png',
-          difficultyLevel: 8),
+        category: ProjectCategory.dataScience,
+        title: 'Dputils Library',
+        description:
+            'A Python utility library to simplify web scraping and document data extraction. Integrated support for handling structured and unstructured data efficiently. Used by developers for data mining, NLP preprocessing, and automation tasks.',
+        technologies: ['Python', 'Web Scraping', 'NLP', 'Data Mining'],
+        url: "https://pypi.org/project/dputils",
+        githubUrl: "https://github.com/digipodium/dputils",
+        imageUrl: 'assets/images/dputils.png',
+        difficultyLevel: 8,
+      ),
 
       const Project(
           category: ProjectCategory.dataScience,
@@ -44,7 +45,10 @@ class ProjectLoader {
           technologies: ['Python', 'Django', 'Machine Learning', 'AI'],
           githubUrl: "https://github.com/zaid-kamil/Train_easy",
           imageUrl: 'assets/images/train_easy.png',
-          difficultyLevel: 10),
+          difficultyLevel: 10,
+          screenshots: [
+            'assets/images/train_easy.png',
+          ]),
 
       const Project(
           category: ProjectCategory.webApp,
@@ -89,7 +93,11 @@ class ProjectLoader {
           technologies: ['Jetpack Compose', 'Firebase', 'Kotlin', 'REST API'],
           githubUrl: "https://github.com/zaid-kamil/Fiery-App",
           imageUrl: 'assets/images/fiery_app.png',
-          difficultyLevel: 3),
+          difficultyLevel: 2,
+          screenshots: [
+            'assets/images/fiery_app.png',
+            'assets/images/fiery_app2.png',
+          ]),
 
       const Project(
           category: ProjectCategory.mobileApp,
@@ -154,14 +162,16 @@ class ProjectLoader {
         description: 'Issued by Google\nCredential ID: 13472157',
         category: ProjectCategory.certificates,
         technologies: ['Data Analytics', 'Google Cloud'],
-        url: "https://www.cloudskillsboost.google/public_profiles/23b77b8a-b1b1-44fb-9139-725c75903f2e/badges/13472157?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share",
+        url:
+            "https://www.cloudskillsboost.google/public_profiles/23b77b8a-b1b1-44fb-9139-725c75903f2e/badges/13472157?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share",
       ),
       Project(
         title: 'Python Essentials 1',
         description: 'Issued by Cisco',
         category: ProjectCategory.certificates,
         technologies: ['Python'],
-        url: "https://www.credly.com/badges/ba779349-5e49-4544-b39f-b192d31dbe2f/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/ba779349-5e49-4544-b39f-b192d31dbe2f/linked_in_profile",
         imageUrl: "assets/images/python_essentials.png",
       ),
       Project(
@@ -170,7 +180,8 @@ class ProjectLoader {
             'Issued by IBM SkillsBuild\nCredential ID: e14b11894ad346418d4106f4543640f8',
         category: ProjectCategory.certificates,
         technologies: ['Data Science', 'Analytics', 'Python Programming'],
-        url: "https://courses.skillsbuild.skillsnetwork.site/certificates/e14b11894ad346418d4106f4543640f8",
+        url:
+            "https://courses.skillsbuild.skillsnetwork.site/certificates/e14b11894ad346418d4106f4543640f8",
       ),
       Project(
         title: 'Data Science Tools',
@@ -182,14 +193,16 @@ class ProjectLoader {
           'Python Programming',
           'Data Engineering'
         ],
-        url: "https://www.credly.com/badges/14c409ef-cc8d-49e3-8514-7fbb155575f3/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/14c409ef-cc8d-49e3-8514-7fbb155575f3/linked_in_profile",
       ),
       Project(
         title: 'Machine Learning with Python - Level 1',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Python Programming'],
-        url: "https://www.credly.com/badges/3d663787-b600-45a2-b799-eb7f47149001/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/3d663787-b600-45a2-b799-eb7f47149001/linked_in_profile",
         imageUrl: "assets/images/machine_learning_with_python.png",
       ),
       Project(
@@ -198,7 +211,8 @@ class ProjectLoader {
             'Issued by IBM SkillsBuild\nCredential ID: 5092a316a3c44cabbb8809107eea8983',
         category: ProjectCategory.certificates,
         technologies: ['MySQL', 'SQL', 'Databases'],
-        url: "https://courses.skillsbuild.skillsnetwork.site/certificates/5092a316a3c44cabbb8809107eea8983",
+        url:
+            "https://courses.skillsbuild.skillsnetwork.site/certificates/5092a316a3c44cabbb8809107eea8983",
       ),
       Project(
         title: 'Prompt Engineering for Everyone',
@@ -206,7 +220,8 @@ class ProjectLoader {
             'Issued by IBM SkillsNetwork\nCredential ID: course-v1:IBMSkillsNetwork AI0117EN v1',
         category: ProjectCategory.certificates,
         technologies: ['Generative AI'],
-        url: "https://courses.cognitiveclass.ai/certificates/bb44e48225754e7e8cf23591cf90fbc6",
+        url:
+            "https://courses.cognitiveclass.ai/certificates/bb44e48225754e7e8cf23591cf90fbc6",
       ),
       Project(
         title: 'Automate ML Pipelines Using Apache Airflow',
@@ -214,7 +229,8 @@ class ProjectLoader {
             'Issued by IBM\nCredential ID: course-v1:IBM GPXX0DNQEN v1',
         category: ProjectCategory.certificates,
         technologies: ['Python Programming', 'Apache Airflow'],
-        url: "https://courses.cognitiveclass.ai/certificates/5acf353a8b764f74a7e20a2599ae1ddf",
+        url:
+            "https://courses.cognitiveclass.ai/certificates/5acf353a8b764f74a7e20a2599ae1ddf",
       ),
       Project(
         title: 'Image Segmentation with Mean Shift Clustering',
@@ -222,14 +238,16 @@ class ProjectLoader {
             'Issued by IBM SkillsNetwork\nCredential ID: course-v1:IBMSkillsNetwork GPXX04YGEN v1',
         category: ProjectCategory.certificates,
         technologies: ['Python Programming', 'Image Segmentation'],
-        url: "https://courses.cognitiveclass.ai/certificates/17645098c32d440999b4fe64ef02f025",
+        url:
+            "https://courses.cognitiveclass.ai/certificates/17645098c32d440999b4fe64ef02f025",
       ),
       Project(
         title: 'Enterprise Design Thinking Practitioner',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Design Thinking'],
-        url: "https://www.credly.com/badges/9c7aa05c-6ac0-4c51-82e6-82c9aa0019d9/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/9c7aa05c-6ac0-4c51-82e6-82c9aa0019d9/linked_in_profile",
         imageUrl: "assets/images/enterprise_design_thinking.png",
       ),
       Project(
@@ -237,14 +255,16 @@ class ProjectLoader {
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Cloud Computing'],
-        url: "https://www.credly.com/badges/f784cddf-806e-4f50-930c-fd617d83834a/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/f784cddf-806e-4f50-930c-fd617d83834a/linked_in_profile",
       ),
       Project(
         title: 'IBM Cloud Essentials',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Cloud Computing'],
-        url: "https://www.credly.com/badges/43555279-4cfa-449b-a929-d0ae21dc0c48/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/43555279-4cfa-449b-a929-d0ae21dc0c48/linked_in_profile",
         imageUrl: "assets/images/ibm_cloud_essentials.png",
       ),
       Project(
@@ -252,14 +272,16 @@ class ProjectLoader {
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Analytics', 'Python Programming'],
-        url: "https://www.credly.com/badges/52283130-4adf-449f-9943-68e576b5a1c5/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/52283130-4adf-449f-9943-68e576b5a1c5/linked_in_profile",
       ),
       Project(
         title: 'Data Analysis Using Python',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Analytics', 'Python Programming'],
-        url: "https://www.credly.com/badges/63827ced-b04d-428c-b537-5a50837c913b/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/63827ced-b04d-428c-b537-5a50837c913b/linked_in_profile",
         imageUrl: "assets/images/data_analysis_using_python.png",
       ),
       Project(
@@ -267,29 +289,34 @@ class ProjectLoader {
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Data Science', 'Analytics', 'Python Programming'],
-        url: "https://www.credly.com/badges/84136163-94e9-4216-a87c-5025dad64ec1/linked_in_profile",
-        imageUrl: "assets/images/data_science_foundations_with_python_level_2.png",
+        url:
+            "https://www.credly.com/badges/84136163-94e9-4216-a87c-5025dad64ec1/linked_in_profile",
+        imageUrl:
+            "assets/images/data_science_foundations_with_python_level_2.png",
       ),
       Project(
         title: 'Data Science Methodologies',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Data Science', 'Analytics'],
-        url: "https://www.credly.com/badges/ae263276-176d-4a9c-9fad-7d9527660b67/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/ae263276-176d-4a9c-9fad-7d9527660b67/linked_in_profile",
       ),
       Project(
         title: 'Data Visualization Using Python',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Analytics', 'Python Programming'],
-        url: "https://www.credly.com/badges/0559521a-e89f-4593-94a3-557350448e86/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/0559521a-e89f-4593-94a3-557350448e86/linked_in_profile",
       ),
       Project(
         title: 'Python for Data Science',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Analytics', 'Python', 'Pandas', 'Python Programming'],
-        url: "https://www.credly.com/badges/c8a0b1f9-ecae-4980-9ab1-aa51c5ede18b/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/c8a0b1f9-ecae-4980-9ab1-aa51c5ede18b/linked_in_profile",
         imageUrl: "assets/images/python_for_data_science.png",
       ),
       Project(
@@ -297,7 +324,8 @@ class ProjectLoader {
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
         technologies: ['Analytics'],
-        url: "https://www.credly.com/badges/0bd41153-7e17-48ca-870d-0db4feb47565/linked_in_profile",
+        url:
+            "https://www.credly.com/badges/0bd41153-7e17-48ca-870d-0db4feb47565/linked_in_profile",
       ),
       Project(
         title: 'Associate Android Developer',
@@ -314,7 +342,8 @@ class ProjectLoader {
           'Coroutines',
           'Mobile Architecture'
         ],
-        url: "https://www.credential.net/u2ufqxxm?key=1e566317c54f4f4aa751f9a229f9da9d2975e31aa3e8ab28f4efcf1001f9d4bd",
+        url:
+            "https://www.credential.net/u2ufqxxm?key=1e566317c54f4f4aa751f9a229f9da9d2975e31aa3e8ab28f4efcf1001f9d4bd",
         imageUrl: "assets/images/associate_android_developer.png",
       ),
       Project(
@@ -332,12 +361,11 @@ class ProjectLoader {
         url: "https://www.hackerrank.com/certificates/4d6fa264282e",
       ),
       Project(
-        title: 'SQL (Intermediate)',
-        description: 'Issued by HackerRank',
-        category: ProjectCategory.certificates,
-        technologies: ['SQL'],
-        url: "https://www.hackerrank.com/certificates/a2fc6c795cb8"
-      ),
+          title: 'SQL (Intermediate)',
+          description: 'Issued by HackerRank',
+          category: ProjectCategory.certificates,
+          technologies: ['SQL'],
+          url: "https://www.hackerrank.com/certificates/a2fc6c795cb8"),
     ];
   }
 }
