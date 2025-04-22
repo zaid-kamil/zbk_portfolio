@@ -156,6 +156,44 @@ class ProjectLoader {
           ],
           difficultyLevel: 6),
       const Project(
+          category: ProjectCategory.mobileApp,
+          title: "Chatbot Flutter App",
+          imageUrl: "assets/images/chatbot_flutter_app.png",
+          screenshots: [
+            "assets/images/chatbot_flutter_app.png",
+            "assets/images/chatbot_flutter_app2.png",
+          ],
+          githubUrl: "https://github.com/zaid-kamil/chatbot_flutter_app",
+          description:
+              "This project is a Flutter-based chatbot designed for web platforms. It aims to provide a simple and interactive way for users to communicate with an AI-powered chatbot. The app leverages Flutter's capabilities to deliver a smooth and responsive user experience.",
+          technologies: [
+            "Flutter",
+            "Dart",
+            "Gemini API",
+            "Gen AI",
+          ]),
+      const Project(
+        category: ProjectCategory.mobileApp,
+        title: "Visionary App",
+        imageUrl: "assets/images/visionary.png",
+        screenshots: [
+          "assets/images/visionary.png",
+          "assets/images/visionary2.png",
+        ],
+        githubUrl: "https://github.com/zaid-kamil/visionary_project",
+        description:
+            "The Visionary project is a digital vision board app that empowers users to visually create, manage, and organize their goals, visions, and inspirations. By integrating Firebase Authentication and Firestore, users can securely sign up, log in, and store their vision board data in a cloud-based backend. The project emphasizes modular app architecture for scalability and maintainability.",
+        technologies: [
+          "Flutter",
+          "Dart",
+          "Firebase Authentication",
+          "Cloud Firestore",
+          "Flutter Riverpod",
+          "Font Awesome Flutter",
+          "Flutter Form Builder",
+        ],
+      ),
+      const Project(
         title: 'Cloud Technical Series AI Deep Dive',
         description:
             'Issued by Google Cloud Asia Pacific\nCredential ID: 133127404',
