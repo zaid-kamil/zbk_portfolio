@@ -190,7 +190,7 @@ class ProjectLoader {
           "Cloud Firestore",
           "Flutter Riverpod",
           "Font Awesome Flutter",
-          "Flutter Form Builder",
+          "Flutter Form Builder"
         ],
       ),
       const Project(
@@ -434,6 +434,21 @@ class ProjectLoader {
         ],
         videoUrl: "https://www.youtube.com/watch?v=SqKjYOzeKZw",
       ),
+      const Project(
+          category: ProjectCategory.dataScience,
+          title: "Immigration Analysis Dashboard",
+          description:
+              "The dashboard provides insights into international migration trends using data from the United Nations. It includes visualizations for country-wise, continent-wise, and yearly immigration trends.",
+          technologies: ["Python", "Pandas", "Plotly", "Streamlit"],
+          imageUrl: "assets/images/immigration_analysis.png",
+          githubUrl: "https://github.com/zaid-kamil/Immigration_analysis_2024",
+          url:
+              "https://zaid-kamil-immigration-analysis-2024-dashboard-quat04.streamlit.app/",
+          difficultyLevel: 3,
+          screenshots: [
+            "assets/images/immigration_analysis.png",
+            "assets/images/immigration_analysis2.png"
+          ]),
       const Project(
         category: ProjectCategory.dataScience,
         title: "Pokémon Data Analytics for Kids",

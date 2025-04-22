@@ -41,51 +41,52 @@ class PublicationContainer extends StatelessWidget {
       String description, String amazonUrl) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.75,
+      height:
+          MediaQuery.of(context).size.height * 0.8, // Fixed container height
       margin: const EdgeInsets.all(16),
       child: Card(
         elevation: 8,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              flex: 3,
-              child: ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16)),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    // Blurred background image
-                    Image.asset(
-                      imagePath,
-                      fit: BoxFit.cover,
-                    ),
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                      child: Container(
-                        color: Colors.black.withValues(alpha: 0.1),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                    // Centered book cover
-                    Center(
-                      child: Hero(
-                        tag: title,
-                        child: Image.asset(
-                          imagePath,
-                          fit: BoxFit.contain,
-                          height: double.infinity,
-                          width: MediaQuery.of(context).size.width * 0.4,
+                      BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        child: Container(
+                          color: Colors.black.withValues(alpha: 0.1),
                         ),
                       ),
-                    ),
-                  ],
+                      Center(
+                        child: Hero(
+                          tag: title,
+                          child: Image.asset(
+                            imagePath,
+                            fit: BoxFit.contain,
+                            height: double.infinity,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
+              Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,19 +106,16 @@ class PublicationContainer extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .primary
-                                .withOpacity(0.8),
+                                .withValues(alpha: 0.8),
                           ),
                     ),
                     const SizedBox(height: 16),
-                    Expanded(
-                      child: Text(
-                        description,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  height: 1.5,
-                                  fontSize: 18,
-                                ),
-                      ),
+                    Text(
+                      description,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            height: 1.5,
+                            fontSize: 18,
+                          ),
                     ),
                     const SizedBox(height: 16),
                     _buildAnimatedButton(
@@ -128,8 +126,8 @@ class PublicationContainer extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

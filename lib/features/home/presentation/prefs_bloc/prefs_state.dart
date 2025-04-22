@@ -6,7 +6,7 @@ sealed class PrefsState {}
 final class PrefsInitial extends PrefsState {}
 // change color
 final class PrefsColorChangedState extends PrefsState {
-  final Color color;
+  final FlexScheme color;
   final ThemeMode themeMode;
 
   PrefsColorChangedState(this.color, {this.themeMode = ThemeMode.light});

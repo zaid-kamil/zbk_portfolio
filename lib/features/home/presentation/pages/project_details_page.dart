@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zbk_portfolio/features/home/domain/project.dart';
-import 'package:zbk_portfolio/features/home/presentation/widgets/lightbox_view.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/media_viewer.dart';
 import 'package:zbk_portfolio/features/home/presentation/widgets/project_info.dart';
 
 class ProjectDetailsPage extends StatelessWidget {
@@ -34,11 +34,12 @@ class ProjectDetailsPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 48),
                   ProjectInfo(project: project),
-                  if (project.screenshots?.isNotEmpty ?? false) ...[
+                  if (project.videoUrl != null ||
+                      project.screenshots?.isNotEmpty == true) ...[
                     const SizedBox(height: 48),
-                    _buildScreenshots(context),
-                    const SizedBox(height: 48),
+                    _buildMediaGallery(context),
                   ],
+                  const SizedBox(height: 48),
                 ],
               ),
             ),
@@ -84,12 +85,37 @@ class ProjectDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildScreenshots(BuildContext context) {
+  String? _extractYouTubeId(String url) {
+    final regex = RegExp(
+      r'^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/|shorts\/|watch\?v=))([^#\&\?]*).*',
+    );
+    final match = regex.firstMatch(url);
+    return match?.group(1);
+  }
+
+  Widget _buildMediaGallery(BuildContext context) {
+    final List<MediaItem> mediaItems = [
+      if (project.videoUrl != null)
+        MediaItem(
+          type: MediaType.video,
+          url: project.videoUrl!,
+          thumbnailUrl:
+              'https://img.youtube.com/vi/${_extractYouTubeId(project.videoUrl!)}/0.jpg',
+        ),
+      ...(project.screenshots ?? []).map(
+        (screenshot) => MediaItem(
+          type: MediaType.image,
+          url: screenshot,
+          thumbnailUrl: screenshot,
+        ),
+      ),
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Screenshots',
+          'Gallery',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -99,18 +125,38 @@ class ProjectDetailsPage extends StatelessWidget {
           height: 300,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: project.screenshots!.length,
+            itemCount: mediaItems.length,
             separatorBuilder: (context, _) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
+              final item = mediaItems[index];
               return GestureDetector(
-                onTap: () => _showLightbox(context, index),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    project.screenshots![index],
-                    fit: BoxFit.cover,
-                    width: 300,
-                  ),
+                onTap: () => _showMediaViewer(context, mediaItems, index),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        item.thumbnailUrl,
+                        fit: BoxFit.cover,
+                        width: 300,
+                        height: 200,
+                      ),
+                    ),
+                    if (item.type == MediaType.video)
+                      Positioned.fill(
+                        bottom: 80,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.play_circle_outline,
+                            color: Colors.white,
+                            size: 64,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               );
             },
@@ -120,11 +166,12 @@ class ProjectDetailsPage extends StatelessWidget {
     );
   }
 
-  void _showLightbox(BuildContext context, int initialIndex) {
+  void _showMediaViewer(
+      BuildContext context, List<MediaItem> items, int initialIndex) {
     showDialog(
       context: context,
-      builder: (context) => LightboxView(
-        images: project.screenshots!,
+      builder: (context) => MediaViewer(
+        items: items,
         initialIndex: initialIndex,
       ),
     );

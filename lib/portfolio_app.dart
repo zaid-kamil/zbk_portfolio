@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,40 +23,29 @@ class _PortfolioAppState extends State<PortfolioApp> {
 
   @override
   Widget build(BuildContext context) {
-    Color seedColor = Colors.red;
+    FlexScheme scheme = FlexScheme.blackWhite;
     ThemeMode themeMode = ThemeMode.light;
 
     return BlocBuilder<PrefsBloc, PrefsState>(
       buildWhen: (previous, current) {
         // Only rebuild on actual state changes
-        if (previous is PrefsColorChangedState && current is PrefsColorChangedState) {
-          return previous.color != current.color || previous.themeMode != current.themeMode;
+        if (previous is PrefsColorChangedState &&
+            current is PrefsColorChangedState) {
+          return previous.color != current.color ||
+              previous.themeMode != current.themeMode;
         }
         return true;
       },
       builder: (context, state) {
         if (state is PrefsColorChangedState) {
-          seedColor = state.color;
+          scheme = state.color;
           themeMode = state.themeMode;
         }
-        
-        // Pre-generate the themes to avoid rebuilding them frequently
-        final darkTheme = ThemeData.dark().copyWith(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: seedColor,
-            brightness: Brightness.dark,
-          ),
-        );
-        
-        final lightTheme = ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
-          useMaterial3: true,
-        );
-        
+
         return MaterialApp(
           title: 'ZBK Portfolio',
-          darkTheme: darkTheme,
-          theme: lightTheme,
+          theme: FlexThemeData.light(scheme: scheme),
+          darkTheme: FlexThemeData.dark(scheme: scheme, darkIsTrueBlack: true),
           themeMode: themeMode,
           home: const HomeScreen(),
           debugShowCheckedModeBanner: false,

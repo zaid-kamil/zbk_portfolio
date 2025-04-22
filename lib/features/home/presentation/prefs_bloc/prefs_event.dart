@@ -4,7 +4,7 @@ part of 'prefs_bloc.dart';
 sealed class PrefsEvent {}
 
 final class OnColorChangedEvent extends PrefsEvent {
-  final Color color;
+  final FlexScheme color;
 
   OnColorChangedEvent(this.color);
 }

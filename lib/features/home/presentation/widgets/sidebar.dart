@@ -1,29 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gif/gif.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zbk_portfolio/features/home/data/skills_data.dart';
-import 'package:zbk_portfolio/features/home/presentation/prefs_bloc/prefs_bloc.dart';
 
-class Sidebar extends StatefulWidget {
-  const Sidebar({super.key});
-
-  @override
-  State<Sidebar> createState() => _SidebarState();
-}
-
-class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
-  late final GifController controller;
+class Sidebar extends StatelessWidget {
+  Sidebar({super.key});
 
   // Move skills lists to a separate class or file for better organization
   final SkillsData _skillsData = SkillsData();
-
-  @override
-  void initState() {
-    controller = GifController(vsync: this);
-    super.initState();
-  }
 
   void _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -32,20 +16,16 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
     }
   }
 
-  Widget _buildProfileSection() {
+  Widget _buildProfileSection(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 20),
-        Gif(
-          autostart: Autostart.loop,
-          width: 260,
-          height: 260,
-          fps: 20,
-          placeholder: (context) => const Center(
-              child: CircularProgressIndicator(
-            color: Colors.white,
-          )),
-          image: const AssetImage('assets/gifs/me.gif'),
+        ClipOval(
+          child: Image.asset(
+            'assets/images/profile.png',
+            width: 100,
+            height: 100,
+          ),
         ),
         const SizedBox(height: 20),
         Text('Zaid Kamil', style: Theme.of(context).textTheme.displaySmall),
@@ -70,9 +50,9 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
   Widget _buildContactRow(IconData icon, String text, {VoidCallback? onTap}) {
     final row = Row(
       children: [
-        Icon(icon, color: Colors.white, size: 16),
+        Icon(icon, size: 16),
         const SizedBox(width: 8),
-        Text(text, style: const TextStyle(color: Colors.white)),
+        Text(text),
       ],
     );
     return onTap != null
@@ -86,7 +66,6 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
       child: Text(
         title,
         style: const TextStyle(
-          color: Colors.white,
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -94,22 +73,27 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSkillsSection() {
+  Widget _buildSkillsSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionHeader('Skills'),
-        _buildSkillCategory('Programming', _skillsData.programmingSkills),
-        _buildSkillCategory('Data Science & ML', _skillsData.dataSkills),
-        _buildSkillCategory('Web & Mobile', _skillsData.webMobileSkills),
-        _buildSkillCategory('DevOps & Cloud', _skillsData.devOpsSkills),
-        _buildSkillCategory('Other Skills', _skillsData.otherSkills),
-        _buildSkillCategory('Tools & IDEs', _skillsData.toolsSkills),
+        _buildSkillCategory(
+            context, 'Programming', _skillsData.programmingSkills),
+        _buildSkillCategory(
+            context, 'Data Science & ML', _skillsData.dataSkills),
+        _buildSkillCategory(
+            context, 'Web & Mobile', _skillsData.webMobileSkills),
+        _buildSkillCategory(
+            context, 'DevOps & Cloud', _skillsData.devOpsSkills),
+        _buildSkillCategory(context, 'Other Skills', _skillsData.otherSkills),
+        _buildSkillCategory(context, 'Tools & IDEs', _skillsData.toolsSkills),
       ],
     );
   }
 
-  Widget _buildSkillCategory(String title, List<String> skills) {
+  Widget _buildSkillCategory(
+      BuildContext context, String title, List<String> skills) {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Column(
@@ -117,11 +101,11 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
         children: [
           Text(title,
               style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white70)),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              )),
           const SizedBox(height: 4),
-          _buildSkillsChips(skills),
+          _buildSkillsChips(context, skills),
         ],
       ),
     );
@@ -133,39 +117,42 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
       children: [
         // our website
         _socialIcon(FontAwesomeIcons.bookOpenReader,
-            () => _launchURL('https://socialmistry.com'), Colors.blue),
-        _socialIcon(
-            FontAwesomeIcons.linkedin,
-            () => _launchURL('https://linkedin.com/in/zaidbinkamil/'),
-            Colors.indigo),
+            () => _launchURL('https://socialmistry.com')),
+        _socialIcon(FontAwesomeIcons.linkedin,
+            () => _launchURL('https://linkedin.com/in/zaidbinkamil/')),
         _socialIcon(FontAwesomeIcons.github,
-            () => _launchURL('https://github.com/zaid-kamil'), Colors.black87),
+            () => _launchURL('https://github.com/zaid-kamil')),
       ],
     );
   }
 
-  Widget _socialIcon(IconData icon, VoidCallback onTap, Color color) {
+  Widget _socialIcon(IconData icon, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: InkWell(
         onTap: onTap,
         child: CircleAvatar(
           radius: 20,
-          backgroundColor: color,
-          child: Icon(icon, color: Colors.white, size: 20),
+          child: Icon(icon, size: 20),
         ),
       ),
     );
   }
 
-  Widget _buildSkillsChips(
+  Widget _buildSkillsChips(BuildContext context,
     List<String> skills,
   ) {
+    var theme = Theme.of(context);
     return Wrap(
       spacing: 6.0,
       runSpacing: 6.0,
       children: skills
           .map((skill) => Chip(
+                backgroundColor: theme.colorScheme.primary,
+                labelStyle: TextStyle(
+                  color: theme.colorScheme.onPrimary,
+                  fontSize: 12,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -184,7 +171,6 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
           child: Container(
             width: 350,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(20),
                 bottomRight: Radius.circular(20),
@@ -196,13 +182,11 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
                 child: Column(
                   children: [
                     const SizedBox(height: 30),
-                    _buildProfileSection(),
-                    const SizedBox(height: 30),
-                    _buildPrefsActions(),
+                    _buildProfileSection(context),
                     const SizedBox(height: 20),
                     _buildContactInfo(),
                     const SizedBox(height: 16),
-                    _buildSkillsSection(),
+                    _buildSkillsSection(context),
                     const SizedBox(height: 20),
                     _buildSocialLinks(),
                     const SizedBox(height: 20),
@@ -210,7 +194,6 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
                       child: Text(
                         'Build with Flutter & 💖',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 12,
                         ),
                       ),
@@ -222,141 +205,6 @@ class _SidebarState extends State<Sidebar> with TickerProviderStateMixin {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildPrefsActions() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text(
-          'Change theme',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Row(
-          children: actionList,
-        ),
-      ],
-    );
-  }
-
-  List<Widget> get actionList {
-    return [
-      changeThemeAction(),
-      const SizedBox(width: 12),
-      changeColorAction(),
-    ];
-  }
-
-  Widget changeThemeAction() {
-    return BlocBuilder<PrefsBloc, PrefsState>(
-      builder: (context, state) {
-        if (state is PrefsColorChangedState) {
-          final isDarkMode = state.themeMode == ThemeMode.dark;
-          return IconButton(
-            tooltip: '${isDarkMode ? "Light" : "Dark"} mode',
-            icon: Icon(
-              isDarkMode ? Icons.light_mode : Icons.dark_mode,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              context.read<PrefsBloc>().add(OnThemeToggleEvent());
-            },
-          );
-        }
-        return const SizedBox.shrink();
-      },
-    );
-  }
-
-  Widget changeColorAction() {
-    var colors = [
-      ["Black", Colors.black],
-      ["Green", Colors.green],
-      ["Teal", Colors.teal],
-      ["Red", Colors.red],
-      ["Blue", Colors.blue],
-      ["Sky blue", Colors.lightBlue],
-      ["Purple", Colors.purple],
-    ];
-
-    return BlocBuilder<PrefsBloc, PrefsState>(
-      builder: (context, state) {
-        Color color = Colors.red;
-        if (state is PrefsColorChangedState) {
-          color = state.color;
-        }
-
-        return IconButton(
-          icon: Icon(
-            Icons.color_lens,
-            color: Theme.of(context).colorScheme.brightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
-          ),
-          tooltip: "Change theme color",
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Choose a theme color'),
-                content: SizedBox(
-                  width: 300,
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    alignment: WrapAlignment.center,
-                    children: colors.map((colorItem) {
-                      final String colorName = colorItem[0] as String;
-                      final Color colorValue = colorItem[1] as Color;
-                      return InkWell(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          Future.microtask(() {
-                            context
-                                .read<PrefsBloc>()
-                                .add(OnColorChangedEvent(colorValue));
-                          });
-                        },
-                        child: Tooltip(
-                          message: colorName,
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: colorValue,
-                              border: Border.all(
-                                color: color == colorValue
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Colors.grey.withValues(alpha: 0.3),
-                                width: color == colorValue ? 3 : 1,
-                              ),
-                            ),
-                            child: color == colorValue
-                                ? const Icon(Icons.check, color: Colors.white)
-                                : null,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Close'),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
     );
   }
 }

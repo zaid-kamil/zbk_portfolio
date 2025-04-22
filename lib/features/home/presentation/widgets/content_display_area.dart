@@ -87,20 +87,16 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
             demoUrl: project.url,
             githubUrl: project.githubUrl,
             onTap: () {
-              // Use Builder to defer reading the bloc until needed
               context
                   .read<ProjectDetailsBloc>()
                   .add(ShowProjectDetails(project));
-
               Navigator.of(context).push(
                 PageRouteBuilder(
-                  transitionDuration: const Duration(milliseconds: 500),
-                  // Reduced for better performance
+                  transitionDuration: const Duration(milliseconds: 100),
                   pageBuilder: (context, animation, secondaryAnimation) =>
                       ProjectDetailsPage(project: project),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
-                    // Simplified animation curve
                     return FadeTransition(
                       opacity:
                           animation.drive(CurveTween(curve: Curves.easeOut)),
@@ -118,109 +114,68 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
 
   Widget _buildContent(List<Project> projects, ThemeData theme) {
     final primaryColor = theme.primaryColorDark;
-    final backgroundColor = theme.colorScheme.onPrimary;
     switch (widget.category) {
       case ProjectCategory.aboutMe:
-        return Container(
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              border: Border(
-                bottom:
-                    BorderSide(color: primaryColor.withAlpha(150), width: 1),
-                left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-                right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-              ),
-            ),
-            child: Column(
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 16),
-                Expanded(child: AboutMeContainer()),
-              ],
-            ));
+        return Column(
+          children: [
+            _buildHeader(context),
+            const SizedBox(height: 16),
+            Expanded(child: AboutMeContainer()),
+          ],
+        );
       case ProjectCategory.certificates:
-        return Container(
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            border: Border(
-              bottom: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-              left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-              right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-            ),
-          ),
-          child: Column(
-            children: [
-              _buildHeader(context),
-              const SizedBox(height: 16),
-              Expanded(
-                child: CustomScrollView(
-                  controller: ScrollController(),
-                  slivers: [
-                    SliverPadding(
-                      padding: const EdgeInsets.all(16),
-                      sliver: _buildCertificateGrid(
-                        projects,
-                        context,
-                      ),
+        return Column(
+          children: [
+            _buildHeader(context),
+            const SizedBox(height: 16),
+            Expanded(
+              child: CustomScrollView(
+                controller: ScrollController(),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: _buildCertificateGrid(
+                      projects,
+                      context,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       case ProjectCategory.publications:
-        return Container(
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              border: Border(
-                bottom:
-                    BorderSide(color: primaryColor.withAlpha(150), width: 1),
-                left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-                right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-              ),
-            ),
-            child: Column(
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 16),
-                Expanded(child: PublicationContainer()),
-              ],
-            ));
+        return Column(
+          children: [
+            _buildHeader(context),
+            const SizedBox(height: 16),
+            Expanded(child: PublicationContainer()),
+          ],
+        );
       default:
-        return Container(
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            border: Border(
-              bottom: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-              left: BorderSide(color: primaryColor.withAlpha(150), width: 1),
-              right: BorderSide(color: primaryColor.withAlpha(150), width: 1),
+        return Column(
+          children: [
+            _buildHeader(context),
+            CategoryFilterChips(
+              categories: DisplayUtils.getCategories(projects),
+              selectedCategory: _selectedCategory,
+              onCategorySelected: (category) => setState(() {
+                _selectedCategory = category;
+              }),
             ),
-          ),
-          child: Column(
-            children: [
-              _buildHeader(context),
-              CategoryFilterChips(
-                categories: DisplayUtils.getCategories(projects),
-                selectedCategory: _selectedCategory,
-                onCategorySelected: (category) => setState(() {
-                  _selectedCategory = category;
-                }),
+            const SizedBox(height: 16),
+            Expanded(
+              child: CustomScrollView(
+                controller: ScrollController(),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.all(16),
+                    sliver: _buildProjectGrid(projects, context),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: CustomScrollView(
-                  controller: ScrollController(),
-                  slivers: [
-                    SliverPadding(
-                      padding: const EdgeInsets.all(16),
-                      sliver: _buildProjectGrid(projects, context),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
     }
   }
@@ -265,10 +220,6 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
-        // if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        //   return const Center(child: Text('No projects found.'));
-        // }
-
         return _buildContent(snapshot.data!, Theme.of(context));
       },
     );
