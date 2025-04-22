@@ -4,36 +4,44 @@ class ProjectLoader {
   Future<List<Project>> loadProjects() async {
     return [
       const Project(
-        category: ProjectCategory.webApp,
-        title: 'ZBK Portfolio',
-        description: 'My personal portfolio app',
-        imageUrl: 'assets/images/portfolio.png',
-        technologies: ['Flutter', 'Dart'],
-        githubUrl: "github.com/zaid-kamil/zbk_portfolio",
-        url: "https://zaidkamil.socialmistry.com",
-        difficultyLevel: 5,
-      ),
-      const Project(
-        category: ProjectCategory.dataScience,
-        title: 'Dputils Library',
-        description:
-            'A Python utility library to simplify web scraping and document data extraction. Integrated support for handling structured and unstructured data efficiently. Used by developers for data mining, NLP preprocessing, and automation tasks.',
-        technologies: ['Python', 'Web Scraping', 'NLP', 'Data Mining'],
-        url: "https://pypi.org/project/dputils",
-        githubUrl: "https://github.com/digipodium/dputils",
-        imageUrl: 'assets/images/dputils.png',
-        difficultyLevel: 8,
-      ),
+          category: ProjectCategory.webApp,
+          title: 'ZBK Portfolio',
+          description: 'My personal portfolio app',
+          imageUrl: 'assets/images/portfolio.png',
+          technologies: ['Flutter', 'Dart'],
+          githubUrl: "github.com/zaid-kamil/zbk_portfolio",
+          url: "https://zaidkamil.socialmistry.com",
+          difficultyLevel: 5,
+          screenshots: [
+            'assets/images/portfolio.png',
+          ]),
       const Project(
           category: ProjectCategory.dataScience,
-          title: 'Pit - Python Based Version Control System',
+          title: 'Dputils Library',
           description:
-              'Implemented core functionalities like init, add, commit, and log. Designed repository structuring, object storage, and commit tracking to enhance understanding of Git\'s internal mechanisms.',
-          technologies: ['Python', 'Version Control', 'Git'],
-          githubUrl: "https://github.com/zaid-kamil/pit",
-          imageUrl: 'assets/images/pit.png',
-          url: "https://pypi.org/project/pit",
-          difficultyLevel: 6),
+              'A Python utility library to simplify web scraping and document data extraction. Integrated support for handling structured and unstructured data efficiently. Used by developers for data mining, NLP preprocessing, and automation tasks.',
+          technologies: ['Python', 'Web Scraping', 'NLP', 'Data Mining'],
+          url: "https://pypi.org/project/dputils",
+          githubUrl: "https://github.com/digipodium/dputils",
+          imageUrl: 'assets/images/dputils.png',
+          difficultyLevel: 8,
+          screenshots: [
+            'assets/images/dputils.png',
+          ]),
+      const Project(
+        category: ProjectCategory.dataScience,
+        title: 'Pit - Python Based Version Control System',
+        description:
+            'Implemented core functionalities like init, add, commit, and log. Designed repository structuring, object storage, and commit tracking to enhance understanding of Git\'s internal mechanisms.',
+        technologies: ['Python', 'Version Control', 'Git'],
+        githubUrl: "https://github.com/zaid-kamil/pit",
+        imageUrl: 'assets/images/pit.png',
+        url: "https://pypi.org/project/pit",
+        difficultyLevel: 6,
+        screenshots: [
+          'assets/images/pit.png',
+        ],
+      ),
       const Project(
           category: ProjectCategory.webApp,
           title: 'Train Easy – AI Model Training Pipeline',
@@ -63,6 +71,9 @@ class ProjectLoader {
           githubUrl:
               "https://github.com/zaid-kamil/Virtual-Assistance-For-The-Blind",
           imageUrl: 'assets/images/blind_assist.png',
+          screenshots: [
+            'assets/images/blind_assist.png',
+          ],
           difficultyLevel: 7),
       const Project(
           category: ProjectCategory.dataScience,
@@ -100,6 +111,7 @@ class ProjectLoader {
           technologies: ['Jetpack Compose', 'Kotlin', 'Animations'],
           githubUrl: "https://github.com/zaid-kamil/SpeedTest-compose",
           imageUrl: 'assets/images/speedtest_app.jpg',
+          videoUrl: "https://www.youtube.com/shorts/0wiGUhQpr5w",
           difficultyLevel: 6),
       const Project(
           category: ProjectCategory.mobileApp,
@@ -109,6 +121,11 @@ class ProjectLoader {
           technologies: ['Flutter', 'ML', 'Dart'],
           githubUrl: "https://github.com/zaid-kamil/diabetes_classifier_app",
           imageUrl: 'assets/images/diabetes.png',
+          screenshots: [
+            'assets/images/diabetes.png',
+            'assets/images/diabetes2.png',
+            'assets/images/diabetes3.png',
+          ],
           difficultyLevel: 7),
       const Project(
           category: ProjectCategory.mobileApp,
@@ -119,6 +136,11 @@ class ProjectLoader {
           githubUrl:
               "https://github.com/zaid-kamil/flutter_house_price_prediction",
           imageUrl: 'assets/images/house_price.png',
+          screenshots: [
+            'assets/images/house_price.png',
+            'assets/images/house_price2.png',
+            'assets/images/house_price3.png',
+          ],
           difficultyLevel: 8),
       const Project(
           category: ProjectCategory.mobileApp,
@@ -128,6 +150,10 @@ class ProjectLoader {
           technologies: ['Flutter', 'HuggingFace API', 'AI', 'ML'],
           githubUrl: "https://github.com/zaid-kamil/image_recognition_app",
           imageUrl: 'assets/images/image_recognition.png',
+          screenshots: [
+            'assets/images/image_recognition.png',
+            'assets/images/image_recognition2.png',
+          ],
           difficultyLevel: 6),
       const Project(
         title: 'Cloud Technical Series AI Deep Dive',
@@ -160,8 +186,17 @@ class ProjectLoader {
         category: ProjectCategory.certificates,
         technologies: ['Python'],
         url:
-            "https://www.credly.com/badges/ba779349-5e49-4544-b39f-b192d31dbe2f/linked_in_profile",
+            "https://www.credly.com/badges/ba779349-5e49-4544-b39f-b192d31dbe2f",
         imageUrl: "assets/images/python_essentials.png",
+      ),
+      const Project(
+        title: 'Python Essentials 2',
+        description: 'Issued by Cisco',
+        category: ProjectCategory.certificates,
+        technologies: ['Python'],
+        url:
+            "https://www.credly.com/badges/958512d5-5685-4187-a6c1-8e1cc1d941be",
+        imageUrl: "assets/images/python-essentials-2.png",
       ),
       const Project(
         title: 'Data Science 101',
@@ -184,6 +219,7 @@ class ProjectLoader {
         ],
         url:
             "https://www.credly.com/badges/14c409ef-cc8d-49e3-8514-7fbb155575f3/linked_in_profile",
+        imageUrl: "assets/images/data_science_tools.png",
       ),
       const Project(
         title: 'Machine Learning with Python - Level 1',
@@ -246,6 +282,7 @@ class ProjectLoader {
         technologies: ['Cloud Computing'],
         url:
             "https://www.credly.com/badges/f784cddf-806e-4f50-930c-fd617d83834a/linked_in_profile",
+        imageUrl: "assets/images/cloud_core.png",
       ),
       const Project(
         title: 'IBM Cloud Essentials',
@@ -263,6 +300,7 @@ class ProjectLoader {
         technologies: ['Analytics', 'Python Programming'],
         url:
             "https://www.credly.com/badges/52283130-4adf-449f-9943-68e576b5a1c5/linked_in_profile",
+        imageUrl: "assets/images/applied_data_science_with_python_level_2.png",
       ),
       const Project(
         title: 'Data Analysis Using Python',
@@ -290,6 +328,7 @@ class ProjectLoader {
         technologies: ['Data Science', 'Analytics'],
         url:
             "https://www.credly.com/badges/ae263276-176d-4a9c-9fad-7d9527660b67/linked_in_profile",
+        imageUrl: "assets/images/data_science_methodologies.png",
       ),
       const Project(
         title: 'Data Visualization Using Python',
@@ -298,6 +337,7 @@ class ProjectLoader {
         technologies: ['Analytics', 'Python Programming'],
         url:
             "https://www.credly.com/badges/0559521a-e89f-4593-94a3-557350448e86/linked_in_profile",
+        imageUrl: "assets/images/data_visualization_using_python.png",
       ),
       const Project(
         title: 'Python for Data Science',
@@ -312,9 +352,11 @@ class ProjectLoader {
         title: 'Data Science Foundations - Level 1',
         description: 'Issued by IBM',
         category: ProjectCategory.certificates,
-        technologies: ['Analytics'],
+        technologies: ['Data Science', 'Analytics', 'Python Programming'],
         url:
             "https://www.credly.com/badges/0bd41153-7e17-48ca-870d-0db4feb47565/linked_in_profile",
+        imageUrl:
+            "assets/images/data_science_foundations_with_python_level_1.png",
       ),
       const Project(
         title: 'Associate Android Developer',
@@ -353,6 +395,44 @@ class ProjectLoader {
           "assets/images/automobile_dashboard3.png",
         ],
         videoUrl: "https://www.youtube.com/watch?v=SqKjYOzeKZw",
+      ),
+      const Project(
+        category: ProjectCategory.dataScience,
+        title: "Pokémon Data Analytics for Kids",
+        description:
+            "This project introduces children to data analytics using Pokémon data, with interactive analysis, visualization tools.",
+        technologies: ["Python", "Streamlit", "Plotly", "Pandas"],
+        imageUrl: "assets/images/pokemon_data_analytics_for_kids.png",
+        githubUrl:
+            "https://github.com/zaid-kamil/pokemon_data_analytics_for_kids",
+        url:
+            "https://zaid-kamil-pokemon-data-analytics-for-kids-app-7zxni8.streamlit.app/",
+        difficultyLevel: 3,
+        screenshots: [
+          "assets/images/pokemon_data_analytics_for_kids.png",
+          "assets/images/pokemon_data_analytics_for_kids2.png",
+        ],
+        videoUrl: "https://www.youtube.com/watch?v=8sRjE_v8TBw",
+      ),
+      const Project(
+        category: ProjectCategory.dataScience,
+        title: "Pokémon Dashboard App",
+        description:
+            "An interactive app to explore Pokémon data using filters, charts, and tables. Includes visualizations of statistics like type distribution and base stats.",
+        technologies: [
+          "Python",
+          "Streamlit",
+          "Pandas",
+        ],
+        imageUrl: "assets/images/pokemon_dashboard_app.png",
+        githubUrl: "https://github.com/zaid-kamil/pokemon_dashboard_app",
+        url:
+            "https://zaid-kamil-pokemon-dashboard-app-dashboard-rwaawz.streamlit.app/",
+        difficultyLevel: 3,
+        screenshots: [
+          "assets/images/pokemon_dashboard_app.png",
+          "assets/images/pokemon_dashboard_app2.png",
+        ],
       ),
       const Project(
         title: 'Problem Solving (Basic)',
