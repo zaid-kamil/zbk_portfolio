@@ -27,6 +27,9 @@ class ProjectLoader {
           difficultyLevel: 8,
           screenshots: [
             'assets/images/dputils.png',
+            'assets/images/dputils2.png',
+            'assets/images/dputils3.png',
+            'assets/images/dputils4.png',
           ]),
       const Project(
         category: ProjectCategory.dataScience,
@@ -43,6 +46,21 @@ class ProjectLoader {
         ],
       ),
       const Project(
+        category: ProjectCategory.dataScience,
+        title: '3D Visualization Toolkit for Blender',
+        description:
+            'A Blender plugin designed for data visualization, enabling users to import CSV files and generate interactive 3D visualizations like line graphs, bar charts, pie charts, scatter plots, and histograms. It also includes custom object manipulation and color-setting functionality.',
+        technologies: ['Python', 'Blender', 'Data Visualization'],
+        githubUrl: "https://github.com/zaid-kamil/fyp_3d_vis_blender_plugin",
+        imageUrl: 'assets/images/blender_visualization_plugin.png',
+        difficultyLevel: 9,
+        screenshots: [
+          'assets/images/blender_visualization_plugin.png',
+          'assets/images/blender_visualization_plugin2.png',
+          'assets/images/blender_visualization_plugin3.png',
+        ],
+      ),
+      const Project(
           category: ProjectCategory.webApp,
           title: 'Train Easy – AI Model Training Pipeline',
           description:
@@ -54,6 +72,27 @@ class ProjectLoader {
           screenshots: [
             'assets/images/train_easy.png',
           ]),
+      const Project(
+        category: ProjectCategory.webApp,
+        title: 'Latency Monitoring Website',
+        description:
+            'A Django-based web application designed to monitor the latency and availability of websites. It includes features like a user-friendly dashboard, website management, task scheduling with Celery, and notification handling.',
+        technologies: [
+          'Python',
+          'Django',
+          'Celery',
+          'HTML',
+          'CSS',
+          'JavaScript'
+        ],
+        githubUrl: "https://github.com/zaid-kamil/LATENCY_MONITORING_WEBSITE",
+        imageUrl: 'assets/images/latency_monitoring.png',
+        difficultyLevel: 8,
+        screenshots: [
+          'assets/images/latency_monitoring.png',
+          'assets/images/latency_monitoring2.png'
+        ],
+      ),
       const Project(
           category: ProjectCategory.webApp,
           title: 'Virtual Assistance for the Blind',
@@ -111,8 +150,31 @@ class ProjectLoader {
           technologies: ['Jetpack Compose', 'Kotlin', 'Animations'],
           githubUrl: "https://github.com/zaid-kamil/SpeedTest-compose",
           imageUrl: 'assets/images/speedtest_app.jpg',
+          screenshots: [
+            'assets/images/speedtest_app.jpg',
+          ],
           videoUrl: "https://www.youtube.com/shorts/0wiGUhQpr5w",
           difficultyLevel: 6),
+      const Project(
+        category: ProjectCategory.mobileApp,
+        title: 'Compose Forms',
+        description:
+            'An Android app showcasing login, sign-up, and about screens using Jetpack Compose.',
+        technologies: [
+          'Jetpack Compose',
+          'Kotlin',
+          'Material Design 3',
+          'Animations'
+        ],
+        githubUrl: "https://github.com/zaid-kamil/Compose-Forms",
+        imageUrl: 'assets/images/compose_forms_app.jpg',
+        screenshots: [
+          'assets/images/compose_forms_app.jpg',
+          'assets/images/compose_forms_app2.jpg',
+        ],
+        videoUrl: "https://www.youtube.com/shorts/In7yu9AO8vg",
+        difficultyLevel: 5,
+      ),
       const Project(
           category: ProjectCategory.mobileApp,
           title: 'Diabetes Classifier App',
@@ -142,6 +204,21 @@ class ProjectLoader {
             'assets/images/house_price3.png',
           ],
           difficultyLevel: 8),
+      const Project(
+        category: ProjectCategory.mobileApp,
+        title: 'FLoC App',
+        description:
+            'An innovative image application that displays images from local assets to demonstrate the BLoC pattern in Flutter.',
+        technologies: ['Flutter', 'Dart', 'bloc'],
+        githubUrl: "https://github.com/zaid-kamil/floc_app",
+        imageUrl: 'assets/images/floc.png',
+        screenshots: [
+          'assets/images/floc.png',
+          'assets/images/floc2.png',
+        ],
+        difficultyLevel: 6,
+        videoUrl: "https://youtube.com/shorts/j20fmwIrIRQ?feature=share",
+      ),
       const Project(
           category: ProjectCategory.mobileApp,
           title: 'Image Recognition App',
