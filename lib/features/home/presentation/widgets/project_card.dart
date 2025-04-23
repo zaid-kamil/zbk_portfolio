@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zbk_portfolio/features/home/presentation/widgets/hover_image_container.dart';
 
 class ProjectCard extends StatelessWidget {
   final String title;
@@ -293,98 +294,4 @@ class ProjectCard extends StatelessWidget {
   }
 }
 
-class HoverImageContainer extends StatefulWidget {
-  final String imageUrl;
-  final String heroTag;
-  final Widget Function() onErrorBuilder;
 
-  const HoverImageContainer({
-    super.key,
-    required this.imageUrl,
-    required this.heroTag,
-    required this.onErrorBuilder,
-  });
-
-  @override
-  createState() => _HoverImageContainerState();
-}
-
-class _HoverImageContainerState extends State<HoverImageContainer> {
-  bool isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => isHovered = true),
-      onExit: (_) => setState(() => isHovered = false),
-      child: Hero(
-        transitionOnUserGestures: true,
-        tag: widget.heroTag,
-        child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-          child: AnimatedScale(
-            scale: isHovered ? 1.2 : 1.0,
-            duration: const Duration(milliseconds: 200),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              child: ColorFiltered(
-                colorFilter: isHovered
-                    ? const ColorFilter.matrix([
-                        1,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                      ])
-                    : const ColorFilter.matrix([
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0,
-                        0,
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0,
-                        0,
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                      ]),
-                child: Image.network(
-                  widget.imageUrl,
-                  fit: BoxFit.cover,
-                  height: double.infinity,
-                  width: double.infinity,
-                  errorBuilder: (_, __, ___) => widget.onErrorBuilder(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

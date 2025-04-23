@@ -32,14 +32,14 @@ class ProjectDetailsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 18),
                   ProjectInfo(project: project),
                   if (project.videoUrl != null ||
                       project.screenshots?.isNotEmpty == true) ...[
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 18),
                     _buildMediaGallery(context),
                   ],
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 18),
                 ],
               ),
             ),

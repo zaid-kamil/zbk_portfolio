@@ -1,12 +1,12 @@
-import 'package:bloc/bloc.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show Bloc;
 
 part 'prefs_event.dart';
 part 'prefs_state.dart';
 
 class PrefsBloc extends Bloc<PrefsEvent, PrefsState> {
-  PrefsBloc() : super(PrefsColorChangedState(FlexScheme.blackWhite)) {
+  PrefsBloc() : super(PrefsColorChangedState(FlexScheme.hippieBlue)) {
     on<OnColorChangedEvent>((event, emit) {
       // Check if we're already using this color to avoid unnecessary updates
       if (state is PrefsColorChangedState) {

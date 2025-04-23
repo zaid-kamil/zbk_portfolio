@@ -113,7 +113,6 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
   }
 
   Widget _buildContent(List<Project> projects, ThemeData theme) {
-    final primaryColor = theme.primaryColorDark;
     switch (widget.category) {
       case ProjectCategory.aboutMe:
         return Column(
@@ -201,7 +200,7 @@ class _ContentDisplayAreaState extends State<ContentDisplayArea> {
         scale: animation,
         child: CertificateCard(
           title: filteredProjects[i].title,
-          issuedBy: filteredProjects[i].description ?? '',
+          issuedBy: filteredProjects[i].description,
           credentialUrl: filteredProjects[i].url,
           imageUrl: filteredProjects[i].imageUrl ?? '',
         ),

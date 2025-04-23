@@ -109,22 +109,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: Tooltip(
                           message: colorName,
-                          child: Container(
+                          child: SizedBox(
                             width: 50,
                             height: 50,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: colorValue,
-                              border: Border.all(
-                                color: color == colorValue
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Colors.grey.withValues(alpha: 0.3),
-                                width: color == colorValue ? 3 : 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: colorValue,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: colorScheme == color
+                                      ? Colors.black
+                                      : Colors.transparent,
+                                  width: 2,
+                                ),
                               ),
                             ),
-                            child: color == colorValue
-                                ? const Icon(Icons.check, color: Colors.white)
-                                : null,
                           ),
                         ),
                       );

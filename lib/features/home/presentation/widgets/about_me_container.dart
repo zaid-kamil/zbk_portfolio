@@ -138,7 +138,7 @@ class AboutMeContainer extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
                 ),
                 child: Text(
                   "If you're looking to collaborate on innovative projects, develop impactful learning experiences, or simply connect over emerging tech, I'd love to hear from you.",
