@@ -111,9 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () {
                           Navigator.of(context).pop();
                           Future.microtask(() {
-                            context
-                                .read<PrefsBloc>()
-                                .add(OnColorChangedEvent(colorScheme));
+                            if (mounted) {
+                              context
+                                  .read<PrefsBloc>()
+                                  .add(OnColorChangedEvent(colorScheme));
+                            }
                           });
                         },
                         child: Tooltip(
