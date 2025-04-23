@@ -116,7 +116,7 @@ class Sidebar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         // our website
-        _socialIcon(FontAwesomeIcons.bookOpenReader,
+        _socialIcon(FontAwesomeIcons.globe,
             () => _launchURL('https://socialmistry.com')),
         _socialIcon(FontAwesomeIcons.linkedin,
             () => _launchURL('https://linkedin.com/in/zaidbinkamil/')),

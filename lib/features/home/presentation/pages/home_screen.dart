@@ -44,11 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<PrefsBloc, PrefsState>(
       builder: (context, state) {
         if (state is PrefsColorChangedState) {
-          final isDarkMode = state.themeMode == ThemeMode.dark;
+          final isDarkMode = state.themeMode == ThemeMode.dark ||
+              state.themeMode == ThemeMode.system &&
+                  MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+          debugPrint('Current theme mode is Dark: $isDarkMode');
           return IconButton(
             tooltip: '${isDarkMode ? "Light" : "Dark"} mode',
             icon: Icon(
-              isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
             ),
             onPressed: () {
               context.read<PrefsBloc>().add(OnThemeToggleEvent());
@@ -64,8 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
     var colors = [
       ["Black", FlexScheme.blackWhite, Colors.black],
       ["Green", FlexScheme.green, Colors.green],
-      ["Red", FlexScheme.red, Colors.red],
-      ["Blue", FlexScheme.hippieBlue, Colors.blue],
+      ["Red", FlexScheme.shadRed, Colors.red],
+      ["Blue", FlexScheme.bahamaBlue, Colors.blue],
+      ["Purple", FlexScheme.deepPurple, Colors.purple],
+      ["Pink", FlexScheme.pinkM3, Colors.pink],
+      ["Amber", FlexScheme.amber, Colors.amber],
+      ["Teal", FlexScheme.tealM3, Colors.teal],
+      ["Yellow", FlexScheme.shadYellow, Colors.yellow],
+      ["Indigo", FlexScheme.indigo, Colors.indigo],
     ];
 
     return BlocBuilder<PrefsBloc, PrefsState>(
@@ -169,13 +178,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
             appBar: AppBar(
               backgroundColor: backgroundColor,
-              title: const Text('Zaid Kamil\'s Portfolio'),
+              title: const Text('Journey before Destination'),
               actions: actionList,
               bottom: TabBar(
                 automaticIndicatorColorAdjustment: true,
                 isScrollable: true,
                 indicatorColor: Theme.of(context).colorScheme.primary,
-                physics: const BouncingScrollPhysics(),
                 tabs: _tabItems.map((tab) {
                   return Tab(
                     text: tab.name,

@@ -18,10 +18,6 @@ class ProjectDetailsPage extends StatelessWidget {
             expandedHeight: 600,
             pinned: true,
             backgroundColor: Theme.of(context).colorScheme.surface,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
             flexibleSpace: FlexibleSpaceBar(
               background: _buildHeader(context),
             ),

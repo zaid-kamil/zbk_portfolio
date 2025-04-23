@@ -24,7 +24,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
   @override
   Widget build(BuildContext context) {
     FlexScheme scheme = FlexScheme.blackWhite;
-    ThemeMode themeMode = ThemeMode.light;
+    ThemeMode themeMode = ThemeMode.system;
 
     return BlocBuilder<PrefsBloc, PrefsState>(
       buildWhen: (previous, current) {

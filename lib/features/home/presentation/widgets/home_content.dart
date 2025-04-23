@@ -8,7 +8,7 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TabBarView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: BouncingScrollPhysics(),
       children: [
         ContentDisplayArea(category: ProjectCategory.mobileApp),
         ContentDisplayArea(category: ProjectCategory.webApp),

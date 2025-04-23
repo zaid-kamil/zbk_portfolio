@@ -42,7 +42,7 @@ class ProjectLoader {
         url: "https://pypi.org/project/pit",
         difficultyLevel: 6,
         screenshots: [
-          'assets/images/pit.png',
+          'assets/images/pit.webp',
         ],
       ),
       const Project(
@@ -167,10 +167,10 @@ class ProjectLoader {
           'Animations'
         ],
         githubUrl: "https://github.com/zaid-kamil/Compose-Forms",
-        imageUrl: 'assets/images/compose_forms_app.jpg',
+        imageUrl: 'assets/images/compose_forms_app.png',
         screenshots: [
-          'assets/images/compose_forms_app.jpg',
-          'assets/images/compose_forms_app2.jpg',
+          'assets/images/compose_forms_app.png',
+          'assets/images/compose_forms_app2.png',
         ],
         videoUrl: "https://www.youtube.com/shorts/In7yu9AO8vg",
         difficultyLevel: 5,
@@ -217,7 +217,7 @@ class ProjectLoader {
           'assets/images/floc2.png',
         ],
         difficultyLevel: 6,
-        videoUrl: "https://youtube.com/shorts/j20fmwIrIRQ?feature=share",
+        videoUrl: "https://www.youtube.com/watch?v=j20fmwIrIRQ",
       ),
       const Project(
           category: ProjectCategory.mobileApp,
