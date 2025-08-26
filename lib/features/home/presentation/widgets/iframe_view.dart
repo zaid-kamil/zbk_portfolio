@@ -25,11 +25,7 @@ class _IframeViewState extends State<IframeView> {
           'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
       ..src = widget.src;
 
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(
-      widget.src,
-      (int viewId) => _iframeElement,
-    );
+
   }
 
   @override

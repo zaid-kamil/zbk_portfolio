@@ -110,7 +110,7 @@ class ProjectCard extends StatelessWidget {
       ),
       child: ClipRRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          filter: ImageFilter.erode(radiusX: 2, radiusY: 2),
           child: Container(
             color: Colors.black.withValues(alpha: 0.1),
             child: Center(
