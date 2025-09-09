@@ -9,7 +9,7 @@ class ProjectLoader {
           description: 'My personal portfolio app',
           imageUrl: 'assets/images/portfolio.png',
           technologies: ['Flutter', 'Dart'],
-          githubUrl: "github.com/zaid-kamil/zbk_portfolio",
+          githubUrl: "https://github.com/zaid-kamil/zbk_portfolio",
           url: "https://zaidkamil.socialmistry.com",
           difficultyLevel: 5,
           screenshots: [
@@ -109,10 +109,6 @@ class ProjectLoader {
           ],
           githubUrl:
               "https://github.com/zaid-kamil/Virtual-Assistance-For-The-Blind",
-          imageUrl: 'assets/images/blind_assist.png',
-          screenshots: [
-            'assets/images/blind_assist.png',
-          ],
           difficultyLevel: 7),
       const Project(
           category: ProjectCategory.dataScience,

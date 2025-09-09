@@ -22,4 +22,8 @@ void main() {
       )
     ], child: const PortfolioApp()),
   );
+  // Remove the native/web splash after first frame so it actually shows on web
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    FlutterNativeSplash.remove();
+  });
 }
