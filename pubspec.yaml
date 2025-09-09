@@ -40,7 +40,9 @@ dependencies:
   chewie: any
   shared_preferences: any
   font_awesome_flutter: any
-  flex_color_scheme: any
+  flex_color_scheme: ^8.3.0
+  web: any
+  flutter_tilt: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -54,33 +56,4 @@ flutter:
     - assets/gifs/
 
 # Flutter Native Splash configuration
-flutter_native_splash:
-  # Background color for the splash screen
-  color: "#ffffff"
 
-  # Image can be a .gif file
-  image: assets/gifs/loading.gif
-
-  # Branding image can be added to make it appear in a corner
-  # branding: assets/images/branding.png
-
-  # Background color for the splash screen in dark mode
-  color_dark: "#ffffff"
-
-  # Image for dark mode (can be the same)
-  image_dark: assets/gifs/loading.gif
-
-  # Android 12 handles the splash screen differently
-  android_12:
-    image: assets/gifs/loading.gif
-    color: "#ffffff"
-    icon_background_color: "#ffffff"
-    image_dark: assets/gifs/loading.gif
-    color_dark: "#ffffff"
-    icon_background_color_dark: "#ffffff"
-
-  # Disable fullscreen mode
-  fullscreen: false
-
-  # Ensure GIFs work on web
-  web: true

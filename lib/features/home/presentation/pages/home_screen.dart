@@ -109,14 +109,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       final Color colorValue = colorItem[2] as Color;
                       return InkWell(
                         onTap: () {
+                          // Capture bloc before any potential navigation to avoid using context after pop
+                          final prefsBloc = context.read<PrefsBloc>();
                           Navigator.of(context).pop();
-                          Future.microtask(() {
-                            if (mounted) {
-                              context
-                                  .read<PrefsBloc>()
-                                  .add(OnColorChangedEvent(colorScheme));
-                            }
-                          });
+                          if (mounted) {
+                            prefsBloc.add(OnColorChangedEvent(colorScheme));
+                          }
                         },
                         child: Tooltip(
                           message: colorName,

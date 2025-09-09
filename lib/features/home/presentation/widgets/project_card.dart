@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:zbk_portfolio/features/home/presentation/widgets/hover_image_container.dart';
 
 class ProjectCard extends StatelessWidget {
   final String title;
@@ -29,105 +27,102 @@ class ProjectCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmallCard = constraints.maxWidth < 300;
-        return Card(
-          elevation: 3,
-          color: Theme.of(context).brightness == Brightness.light
-              ? Colors.white
-              : Colors.black,
-          shadowColor:
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(
-              color:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
-              width: 1.0,
-            ),
-          ),
-          child: InkWell(
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildImageSection(context),
-                Expanded(
-                  child: _buildContentSection(context, isSmallCard),
+        return Tilt(
+          tiltConfig: const TiltConfig(angle: 20),
+          childLayout: ChildLayout(
+            outer: [
+              // Only the tag chip uses parallax now
+              Positioned(
+                top: 10,
+                right: 10,
+                child: TiltParallax(
+                  size: const Offset(-30, -30),
+                  child: _buildTagChip(context),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
+          child: _buildBaseCard(context, isSmallCard),
         );
       },
     );
   }
 
-  Widget _buildImageSection(BuildContext context) {
-    return Container(
-      height: 220,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-        // Removed box shadow for flatter look
+  // Base card without the image + tag (they are parallax overlays now)
+  Widget _buildBaseCard(BuildContext context, bool isSmallCard) {
+    const double imageHeight = 220;
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      elevation: 3,
+      color: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Colors.black,
+      shadowColor: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+          width: 1.0,
+        ),
       ),
-      child: Stack(
-        children: [
-          HoverImageContainer(
-            imageUrl: imageUrl,
-            heroTag: 'project-image-${title.hashCode}',
-            onErrorBuilder: () => _buildBlurredFallbackImage(context),
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: Theme.of(context)
-                    .colorScheme
-                    .primary, // Solid color instead of gradient
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Text(
-                technologies.isNotEmpty ? technologies.first : "Project",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image now part of base card (no parallax)
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(16)),
+              child: Hero(
+                tag: 'project-image-${title.hashCode}',
+                child: Image.asset(
+                  imageUrl,
+                  height: imageHeight,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (c, e, s) => _buildFallbackImage(context),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBlurredFallbackImage(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-      ),
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
-            color: Colors.black.withValues(alpha: 0.1),
-            child: Center(
-              child: Icon(
-                Icons.image_not_supported_outlined,
-                size: 48,
-                color: Theme.of(context)
-                    .colorScheme
-                    .primary
-                    .withValues(alpha: 0.7),
-              ),
+            Expanded(
+              child: _buildContentSection(context, isSmallCard),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildTagChip(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        technologies.isNotEmpty ? technologies.first : 'Project',
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFallbackImage(BuildContext context) => Container(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        child: Center(
+          child: Icon(
+            Icons.image_not_supported_outlined,
+            size: 48,
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
+          ),
+        ),
+      );
 
   Widget _buildContentSection(BuildContext context, bool isSmallCard) {
     return Container(
@@ -293,5 +288,3 @@ class ProjectCard extends StatelessWidget {
     }
   }
 }
-
-
