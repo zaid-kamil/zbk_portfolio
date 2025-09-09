@@ -35,15 +35,35 @@ class _HoverImageContainerState extends State<HoverImageContainer> {
             duration: const Duration(milliseconds: 300),
             // Remove AnimatedScale and animate blur value using TweenAnimationBuilder.
             child: TweenAnimationBuilder<double>(
-              key: ValueKey(isHovered),
               tween: Tween<double>(
-                begin: isHovered ? 25.0 : 0.0,
-                end: isHovered ? 0.0 : 25.0,
+                begin: isHovered ? 0.0 : 1.0,
+                end: isHovered ? 1.0 : 0.0,
               ),
               duration: const Duration(milliseconds: 300),
-              builder: (context, blur, child) {
-                return ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+              builder: (context, value, child) {
+                return ColorFiltered(
+                  colorFilter: ColorFilter.matrix(<double>[
+                    0.2126 + 0.7874 * value,
+                    0.7152 - 0.7152 * value,
+                    0.0722 - 0.0722 * value,
+                    0,
+                    0,
+                    0.2126 - 0.2126 * value,
+                    0.7152 + 0.2848 * value,
+                    0.0722 - 0.0722 * value,
+                    0,
+                    0,
+                    0.2126 - 0.2126 * value,
+                    0.7152 - 0.7152 * value,
+                    0.0722 + 0.9278 * value,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ]),
                   child: child,
                 );
               },
